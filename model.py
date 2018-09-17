@@ -107,10 +107,19 @@ class Venues(db.Model):
                         self.country)
 
 
-class Categories(db.Model):
+class Category(db.Model):
     """Categories that users can choose from for events, venues, or tpics"""
 
-    __tablename__ = 'category'
+    __tablename__ = 'categories'
+    #id
+    #name
+    #image
+
+
+class Category_Subcategory(db.Model):
+    """Categories that users can choose from for events, venues, or tpics"""
+
+    __tablename__ = 'categories_subcategories'
 
 
 
