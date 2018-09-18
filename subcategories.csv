@@ -1,0 +1,442 @@
+1,Amphitheater
+1,Aquarium
+1,Arcade
+1,Art Gallery
+1,Bowling Alley
+1,Casino
+1,Circus
+1,Comedy Club
+1,Concert Hall
+1,Country Dance Club
+1,Disc Golf
+1,Exhibit
+1,General Entertainment
+1,Go Kart Track
+1,Historic Site
+1,Laser Tag
+1,Memorial Site
+1,Mini Golf
+1,Movie Theater
+1,Museum
+1,Music Venue
+1,Performing Arts Venue
+1,Pool Hall
+1,Public Art
+1,Racecourse
+1,Racetrack
+1,Roller Rink
+1,Salsa Club
+1,Stadium
+1,Theme Park
+1,Tour Provider
+1,Water Park
+1,Zoo
+2,College Academic Building
+2,College Administrative Building
+2,College Auditorium
+2,College Bookstore
+2,College Cafeteria
+2,College Classroom
+2,College Gym
+2,College Lab
+2,College Library
+2,College Quad
+2,College Rec Center
+2,College Residence Hall
+2,College Stadium
+2,College Theater
+2,Community College
+2,Fraternity House
+2,General College & University
+2,Law School
+2,Medical School
+2,Sorority House
+2,Student Center
+2,Trade School
+2,University
+3,Christmas Market
+3,Conference
+3,Convention
+3,Festival
+3,Line / Queue
+3,Music Festival
+3,Other Event
+3,Parade
+3,Stoop Sale
+3,Street Fair
+4,Afghan Restaurant
+4,African Restaurant
+4,American Restaurant
+4,Asian Restaurant
+4,Australian Restaurant
+4,Austrian Restaurant
+4,BBQ Joint
+4,Bagel Shop
+4,Bakery
+4,Belgian Restaurant
+4,Bistro
+4,Breakfast Spot
+4,Bubble Tea Shop
+4,Buffet
+4,Burger Joint
+4,Cafeteria
+4,Café
+4,Cajun / Creole Restaurant
+4,Caribbean Restaurant
+4,Caucasian Restaurant
+4,Coffee Shop
+4,Comfort Food Restaurant
+4,Creperie
+4,Czech Restaurant
+4,Deli / Bodega
+4,Dessert Shop
+4,Diner
+4,Donut Shop
+4,Dumpling Restaurant
+4,Dutch Restaurant
+4,Eastern European Restaurant
+4,English Restaurant
+4,Falafel Restaurant
+4,Fast Food Restaurant
+4,Fish & Chips Shop
+4,Fondue Restaurant
+4,Food Court
+4,Food Stand
+4,Food Truck
+4,French Restaurant
+4,Fried Chicken Joint
+4,Gastropub
+4,German Restaurant
+4,Gluten-free Restaurant
+4,Greek Restaurant
+4,Halal Restaurant
+4,Hawaiian Restaurant
+4,Hot Dog Joint
+4,Hungarian Restaurant
+4,Indian Restaurant
+4,Irish Pub
+4,Italian Restaurant
+4,Jewish Restaurant
+4,Juice Bar
+4,Kebab Restaurant
+4,Latin American Restaurant
+4,Mac & Cheese Joint
+4,Mediterranean Restaurant
+4,Mexican Restaurant
+4,Middle Eastern Restaurant
+4,Modern European Restaurant
+4,Molecular Gastronomy Restaurant
+4,Pakistani Restaurant
+4,Pet Café
+4,Pizza Place
+4,Polish Restaurant
+4,Portuguese Restaurant
+4,Poutine Place
+4,Restaurant
+4,Russian Restaurant
+4,Salad Place
+4,Sandwich Place
+4,Scandinavian Restaurant
+4,Scottish Restaurant
+4,Seafood Restaurant
+4,Slovak Restaurant
+4,Snack Place
+4,Soup Place
+4,Southern / Soul Food Restaurant
+4,Spanish Restaurant
+4,Sri Lankan Restaurant
+4,Steakhouse
+4,Swiss Restaurant
+4,Tea Room
+4,Theme Restaurant
+4,Turkish Restaurant
+4,Ukrainian Restaurant
+4,Vegetarian / Vegan Restaurant
+4,Wings Joint
+5,Bar
+5,Brewery
+5,Lounge
+5,Night Market
+5,Nightclub
+5,Other Nightlife
+5,Strip Club
+6,Athletics & Sports
+6,Bathing Area
+6,Bay
+6,Beach
+6,Bike Trail
+6,Botanical Garden
+6,Bridge
+6,Campground
+6,Canal Lock
+6,Canal
+6,Castle
+6,Cave
+6,Cemetery
+6,Dive Spot
+6,Dog Run
+6,Farm
+6,Field
+6,Fishing Spot
+6,Forest
+6,Fountain
+6,Garden
+6,Gun Range
+6,Harbor / Marina
+6,Hot Spring
+6,Indoor Play Area
+6,Island
+6,Lake
+6,Lighthouse
+6,Mountain
+6,National Park
+6,Nature Preserve
+6,Other Great Outdoors
+6,Palace
+6,Park
+6,Pedestrian Plaza
+6,Playground
+6,Plaza
+6,Pool
+6,Rafting
+6,Recreation Center
+6,Reservoir
+6,River
+6,Rock Climbing Spot
+6,Scenic Lookout
+6,Sculpture Garden
+6,Ski Area
+6,Skydiving Drop Zone
+6,Stables
+6,States & Municipalities
+6,Summer Camp
+6,Trail
+6,Tree
+6,Vineyard
+6,Volcano
+6,Waterfall
+6,Waterfront
+6,Well
+7,Animal Shelter
+7,Art Studio
+7,Auditorium
+7,Ballroom
+7,Building
+7,Business Center
+7,Club House
+7,Community Center
+7,Convention Center
+7,Cultural Center
+7,Distillery
+7,Distribution Center
+7,Event Space
+7,Factory
+7,Fair
+7,Funeral Home
+7,Government Building
+7,Industrial Estate
+7,Laboratory
+7,Library
+7,Medical Center
+7,Military Base
+7,Non-Profit
+7,Observatory
+7,Office
+7,Parking
+7,Post Office
+7,Power Plant
+7,Prison
+7,Radio Station
+7,Recruiting Agency
+7,Research Station
+7,School
+7,Social Club
+7,Spiritual Center
+7,TV Station
+7,Voting Booth
+7,Warehouse
+7,Waste Facility
+7,Wedding Hall
+7,Winery
+8,Assisted Living
+8,Home (private)
+8,Housing Development
+8,Residential Building (Apartment / Condo)
+8,Trailer Park
+9,ATM
+9,Adult Boutique
+9,Antique Shop
+9,Arts & Crafts Store
+9,Astrologer
+9,Auto Dealership
+9,Auto Garage
+9,Auto Workshop
+9,Automotive Shop
+9,Baby Store
+9,Bank
+9,Bath House
+9,Betting Shop
+9,Big Box Store
+9,Bike Shop
+9,Board Shop
+9,Bookstore
+9,Bridal Shop
+9,Business Service
+9,Camera Store
+9,Candy Store
+9,Car Wash
+9,Carpet Store
+9,Check Cashing Service
+9,Child Care Service
+9,Chocolate Shop
+9,Clothing Store
+9,Comic Shop
+9,Construction & Landscaping
+9,Convenience Store
+9,Cosmetics Shop
+9,Costume Shop
+9,Credit Union
+9,Currency Exchange
+9,Department Store
+9,Design Studio
+9,Discount Store
+9,Dive Shop
+9,Drugstore
+9,Dry Cleaner
+9,EV Charging Station
+9,Electronics Store
+9,Entertainment Service
+9,Event Service
+9,Fabric Shop
+9,Film Studio
+9,Financial or Legal Service
+9,Fireworks Store
+9,Fishing Store
+9,Flea Market
+9,Floating Market
+9,Flower Shop
+9,Food & Drink Shop
+9,Frame Store
+9,Fruit & Vegetable Store
+9,Furniture / Home Store
+9,Gaming Cafe
+9,Garden Center
+9,Gas Station
+9,Gift Shop
+9,Gun Shop
+9,Hardware Store
+9,Health & Beauty Service
+9,Herbs & Spices Store
+9,Hobby Shop
+9,Home Service
+9,Hunting Supply
+9,IT Services
+9,Insurance Office
+9,Internet Cafe
+9,Jewelry Store
+9,Kitchen Supply Store
+9,Knitting Store
+9,Laundromat
+9,Laundry Service
+9,Lawyer
+9,Leather Goods Store
+9,Locksmith
+9,Lottery Retailer
+9,Luggage Store
+9,Marijuana Dispensary
+9,Market
+9,Massage Studio
+9,Mattress Store
+9,Medical Supply Store
+9,Miscellaneous Shop
+9,Mobile Phone Shop
+9,Mobility Store
+9,Motorcycle Shop
+9,Motorsports Shop
+9,Music Store
+9,Nail Salon
+9,Newsstand
+9,Notary
+9,Optical Shop
+9,Other Repair Shop
+9,Outdoor Supply Store
+9,Outlet Mall
+9,Outlet Store
+9,Paper / Office Supplies Store
+9,Pawn Shop
+9,Perfume Shop
+9,Pet Service
+9,Pet Store
+9,Pharmacy
+9,Photography Lab
+9,Photography Studio
+9,Piercing Parlor
+9,Pop-Up Shop
+9,Print Shop
+9,Public Bathroom
+9,Real Estate Office
+9,Record Shop
+9,Recording Studio
+9,Recycling Facility
+9,Rental Service
+9,Salon / Barbershop
+9,Sauna / Steam Room
+9,Shipping Store
+9,Shoe Repair
+9,Shopping Mall
+9,Shopping Plaza
+9,Ski Shop
+9,Smoke Shop
+9,Smoothie Shop
+9,Souvenir Shop
+9,Spa
+9,Sporting Goods Shop
+9,Stationery Store
+9,Storage Facility
+9,Supplement Shop
+9,Tailor Shop
+9,Tanning Salon
+9,Tattoo Parlor
+9,Thrift / Vintage Store
+9,Toy / Game Store
+9,Travel Agency
+9,Used Bookstore
+9,Vape Store
+9,Video Game Store
+9,Video Store
+9,Warehouse Store
+9,Watch Shop
+10,Airport
+10,Baggage Locker
+10,Bike Rental / Bike Share
+10,Boat Rental
+10,Boat or Ferry
+10,Border Crossing
+10,Bus Station
+10,Bus Stop
+10,Cable Car
+10,Cruise
+10,Duty-free Shop
+10,General Travel
+10,Heliport
+10,Hotel
+10,Intersection
+10,Light Rail Station
+10,Metro Station
+10,Moving Target
+10,Pier
+10,Port
+10,RV Park
+10,Rental Car Location
+10,Rest Area
+10,Road
+10,Taxi Stand
+10,Taxi
+10,Toll Booth
+10,Toll Plaza
+10,Tourist Information Center
+10,Train Station
+10,Tram Station
+10,Transportation Service
+10,Travel Lounge
+10,Tunnel

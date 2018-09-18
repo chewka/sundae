@@ -134,7 +134,7 @@ class Category_Subcategory(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True, unique=True)
     main_category = db.Column(db.String(50), db.ForeignKey('categories.id'))
-    name = db.Column(db.String(50), nullable=False)
+    name = db.Column(db.String(100), nullable=False)
 
     def __repr__(self):
         repr_str = '<Category_Subcategory: \
