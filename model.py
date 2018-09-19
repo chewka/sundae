@@ -36,7 +36,7 @@ class User(db.Model):
     email = db.Column(db.String(100), unique=True, index=True, nullable=False)
     postal_code = db.Column(db.String(12), nullable=False)
     phone = db.Column(db.String(15), unique=True, nullable=True)
-    role = db.Column(db.String(15), default='user', nullable=False) #permissions: admin, host, user
+    role = db.Column(db.String(15), default='sundae', nullable=False) #permissions: admin, host, user
     authorized = db.Column(db.Boolean, default=True, nullable=False) #security: protect against blocked users
 
     def __repr__(self):
@@ -71,7 +71,7 @@ class Venue(db.Model):
     __tablename__ = 'venues'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True, unique=True)
-    category = db.Column(db.String(22), db.ForeignKey('categories_subcategories.id')) #User prompts info in form: house, bar, park, nightclub, etc.
+    #category = db.Column(db.String(22), db.ForeignKey('categories_subcategories.id(?)')) #User prompts info in form: house, bar, park, nightclub, etc.
     name = db.Column(db.String(50), unique=True, index=True, nullable=False)
     addr_1 = db.Column(db.String(100), unique=True, nullable=True)
     addr_2 = db.Column(db.String(100), unique=True, nullable=True)
@@ -133,7 +133,7 @@ class Category_Subcategory(db.Model):
     __tablename__ = 'categories_subcategories'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True, unique=True)
-    main_category = db.Column(db.String(50), db.ForeignKey('categories.id'))
+    main_category = db.Column(db.String(50), db.ForeignKey('categories.name'))
     name = db.Column(db.String(100), nullable=False)
 
     def __repr__(self):
@@ -197,7 +197,8 @@ class Invited(db.Model):
     event_id = db.Column(db.Integer, db.ForeignKey('events.id'))
     invited_at = db.Column(db.DateTime, nullable=False)
 
-    user = db.relationship('Users', backref='invites')
+    user = db.relationship('User', backref='invites')
+    event = db.relationship('Event', backref='invites')
 
     def __repr__(self):
         repr_str = '<Invited: \
@@ -223,7 +224,8 @@ class Interested(db.Model):
     event_id = db.Column(db.Integer, db.ForeignKey('events.id'))
     interested_at = db.Column(db.DateTime, nullable=False)
 
-    user = db.relationship('Users', backref='interests')
+    user = db.relationship('User', backref='interests')
+    event = db.relationship('Event', backref='interests')
 
     def __repr__(self):
         repr_str = '<Interested: \
@@ -249,7 +251,8 @@ class Confirmed(db.Model):
     event_id = db.Column(db.Integer, db.ForeignKey('events.id'))
     confirmed_at = db.Column(db.DateTime, nullable=False)
 
-    user = db.relationship('Users', backref='confirms')
+    user = db.relationship('User', backref='confirms')
+    event = db.relationship('Event', backref='confirms')
 
     def __repr__(self):
         repr_str = '<Confirmed: \
