@@ -58,7 +58,7 @@
 3,Conference
 3,Convention
 3,Festival
-3,Line / Queue
+3,Line
 3,Music Festival
 3,Other Event
 3,Parade
@@ -81,14 +81,14 @@
 4,Burger Joint
 4,Cafeteria
 4,Café
-4,Cajun / Creole Restaurant
+4,Cajun/Creole Restaurant
 4,Caribbean Restaurant
 4,Caucasian Restaurant
 4,Coffee Shop
 4,Comfort Food Restaurant
 4,Creperie
 4,Czech Restaurant
-4,Deli / Bodega
+4,Deli/Bodega
 4,Dessert Shop
 4,Diner
 4,Donut Shop
@@ -142,7 +142,7 @@
 4,Slovak Restaurant
 4,Snack Place
 4,Soup Place
-4,Southern / Soul Food Restaurant
+4,Southern/Soul Food Restaurant
 4,Spanish Restaurant
 4,Sri Lankan Restaurant
 4,Steakhouse
@@ -151,7 +151,7 @@
 4,Theme Restaurant
 4,Turkish Restaurant
 4,Ukrainian Restaurant
-4,Vegetarian / Vegan Restaurant
+4,Vegetarian/Vegan Restaurant
 4,Wings Joint
 5,Bar
 5,Brewery
@@ -182,7 +182,7 @@
 6,Fountain
 6,Garden
 6,Gun Range
-6,Harbor / Marina
+6,Harbor/Marina
 6,Hot Spring
 6,Indoor Play Area
 6,Island
@@ -259,9 +259,9 @@
 7,Wedding Hall
 7,Winery
 8,Assisted Living
-8,Home (private)
+8,Home
 8,Housing Development
-8,Residential Building (Apartment / Condo)
+8,Apartment/Condo
 8,Trailer Park
 9,ATM
 9,Adult Boutique
@@ -318,7 +318,7 @@
 9,Food & Drink Shop
 9,Frame Store
 9,Fruit & Vegetable Store
-9,Furniture / Home Store
+9,Furniture/Home Store
 9,Gaming Cafe
 9,Garden Center
 9,Gas Station
@@ -362,7 +362,7 @@
 9,Outdoor Supply Store
 9,Outlet Mall
 9,Outlet Store
-9,Paper / Office Supplies Store
+9,Paper/Office Supplies Store
 9,Pawn Shop
 9,Perfume Shop
 9,Pet Service
@@ -379,8 +379,8 @@
 9,Recording Studio
 9,Recycling Facility
 9,Rental Service
-9,Salon / Barbershop
-9,Sauna / Steam Room
+9,Salon/Barbershop
+9,Sauna/Steam Room
 9,Shipping Store
 9,Shoe Repair
 9,Shopping Mall
@@ -397,8 +397,8 @@
 9,Tailor Shop
 9,Tanning Salon
 9,Tattoo Parlor
-9,Thrift / Vintage Store
-9,Toy / Game Store
+9,Thrift/Vintage Store
+9,Toy/Game Store
 9,Travel Agency
 9,Used Bookstore
 9,Vape Store
@@ -408,7 +408,7 @@
 9,Watch Shop
 10,Airport
 10,Baggage Locker
-10,Bike Rental / Bike Share
+10,Bike Rental/Bike Share
 10,Boat Rental
 10,Boat or Ferry
 10,Border Crossing
