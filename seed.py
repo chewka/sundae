@@ -1,23 +1,24 @@
 from sqlalchemy import func
 from model import Category_Subcategory
-from model import Category
+from model import Category, User, Venue, Event
 
-from model import connect_to_db, db
 from server import app
+from model import connect_to_db, db
 
 
 def load_categories():
     """Load venue categories into database"""
 
+    print('load_categories')
+
     Category.query.delete()
 
-    for row in open("/categories.csv"):
+    for row in open("seed_data/categories.csv"):
         row = row.rstrip()
-        category_id, category = row.split(',')
+        category_id, name = row.split(',')
 
 
-        cat = Category_Subcategory(id=category_id,
-                            category=name)
+        cat = Category(name=name)
 
         db.session.add(cat)
 
@@ -27,15 +28,17 @@ def load_categories():
 def load_subcategories():
     """Load venue subcategories into database"""
 
+    print('load_subcategories')
+
     Category_Subcategory.query.delete()
 
-    for row in open("/subcategories.csv"):
+    for row in open("seed_data/subcategories.csv"):
         row = row.rstrip()
-        category_id, subcategory = row.split(',')
+        category_id, name = row.split(',')
 
 
-        sub = Category_Subcategory(id=category_id,
-                            subcategory=name)
+        sub = Category_Subcategory(main_category=category_id,
+                            name=name)
 
         db.session.add(sub)
 
@@ -45,9 +48,11 @@ def load_subcategories():
 def load_sundaes():
     """Load 'ghost' users (aka 'sundaes') into database"""
 
+    print('load_sundaes')
+
     User.query.delete()
 
-    for row in open("/sundaes.csv"):
+    for row in open("seed_data/sundaes.csv"):
         row = row.rstrip()
         email, postal_code = row.split(',')
 
@@ -63,15 +68,19 @@ def load_sundaes():
 def load_users():
     """Load signed-up users into database"""
 
-    for row in open("/users.csv"):
+    print('load_users')
+
+    for row in open("seed_data/users.csv"):
         row = row.rstrip()
-        email, 
-        postal_code, 
-        fname, 
-        lname, 
-        username, 
-        password,
-        phone = row.split(',')
+
+        email, \
+        postal_code, \
+        fname, \
+        lname, \
+        username, \
+        password, \
+        phone, \
+        role = row.split(',')
 
 
         usr = User(email=email,
@@ -80,7 +89,8 @@ def load_users():
                    lname=lname,
                    username=username,
                    password=password,
-                   phone=phone)
+                   phone=phone,
+                   role=role)
 
         db.session.add(usr)
 
@@ -88,40 +98,55 @@ def load_users():
 
 
 def load_venues():
-    """Load venue subcategories into database"""
+    """Load venue information into database"""
+
+    print('load_venues')
 
     Venue.query.delete()
 
-    for row in open("/venues.csv"):
+    for row in open("seed_data/venues.csv"):
         row = row.rstrip()
-        email, postal_code = row.split(',')
+        category, \
+        name, \
+        addr_1, \
+        addr_2, \
+        city, \
+        postal_code, \
+        state = row.split(',')
 
 
-        usr = User(email=email,
-                   postal_code=postal_code)
+        vnu = Venue(category=category,
+                   name=name,
+                   addr_1=addr_1,
+                   addr_2=addr_2,
+                   city=city,
+                   postal_code=postal_code,
+                   state=state)
 
-        db.session.add(usr)
+        db.session.add(vnu)
 
     db.session.commit()
 
 def load_events():
     """Load events into database"""
 
+    print('load_events')
+
     Event.query.delete()
 
-    for row in open("/events.csv"):
+    for row in open("seed_data/events.csv"):
         row = row.rstrip()
-        private,
-        host_id,
-        venue,
-        title, 
-        begin_at,
-        end_at,
-        max_cap,
+        private, \
+        host_id, \
+        venue, \
+        title, \
+        begin_at, \
+        end_at, \
+        max_cap, \
         url = row.split(',')
 
 
-        evt = User(private=private,
+        evt = Event(private=private,
                    host_id=host_id,
                    venue=venue,
                    title=title,
@@ -133,3 +158,15 @@ def load_events():
         db.session.add(evt)
 
     db.session.commit()
+
+if __name__ == "__main__":
+    connect_to_db(app)
+
+    db.create_all()
+
+    load_categories()
+    load_subcategories()
+    load_sundaes()
+    load_users()
+    load_venues()
+    load_events()

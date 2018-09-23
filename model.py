@@ -65,54 +65,14 @@ class User(db.Model):
                     self.authorized)
 
 
-class Venue(db.Model):
-    """Venues model."""
-
-    __tablename__ = 'venues'
-
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True, unique=True)
-    #category = db.Column(db.String(22), db.ForeignKey('categories_subcategories.id(?)')) #User prompts info in form: house, bar, park, nightclub, etc.
-    name = db.Column(db.String(50), unique=True, index=True, nullable=False)
-    addr_1 = db.Column(db.String(100), unique=True, nullable=True)
-    addr_2 = db.Column(db.String(100), unique=True, nullable=True)
-    city = db.Column(db.String(50), nullable=True)
-    postal_code = db.Column(db.String(12), nullable=False)
-    state = db.Column(db.String(50), nullable=True)
-    country = db.Column(db.String(50), default='United States', nullable=False)
-
-
-    def __repr__(self):
-        repr_str = '<User: \
-                    id={} \
-                    category={} \
-                    name={} \
-                    addr_1={} \
-                    addr_2={} \
-                    city={} \
-                    postal_code={} \
-                    state={} \
-                    country={}>'
-
-        return repr_str.format(
-                    self.id,
-                    self.category
-                    self.name,
-                    self.addr_1,
-                    self.addr_2,
-                    self.city,
-                    self.postal_code,
-                    self.state,
-                    self.country)
-
-
 class Category(db.Model):
     """Categories that users can choose from for venues"""
 
     __tablename__ = 'categories'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True, unique=True)
-    name = db.Column(db.String(50), nullable=False)
-    img = db.Column(db.String(200), nullable=False)
+    name = db.Column(db.String(50), nullable=False, unique=True)
+    img = db.Column(db.String(200), nullable=True)
 
     def __repr__(self):
         repr_str = '<Category: \
@@ -128,12 +88,12 @@ class Category(db.Model):
 
 
 class Category_Subcategory(db.Model):
-    """Categories that users can choose from for events, venues, or tpics"""
+    """Categories that users can choose from for events, venues, or topics"""
 
     __tablename__ = 'categories_subcategories'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True, unique=True)
-    main_category = db.Column(db.String(50), db.ForeignKey('categories.name'))
+    main_category = db.Column(db.Integer, db.ForeignKey('categories.id'))
     name = db.Column(db.String(100), nullable=False)
 
     def __repr__(self):
@@ -149,6 +109,45 @@ class Category_Subcategory(db.Model):
                     self.name)
 
 
+class Venue(db.Model):
+    """Venues model."""
+
+    __tablename__ = 'venues'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True, unique=True)
+    category = db.Column(db.Integer, db.ForeignKey('categories_subcategories.id'), nullable=True) #User prompts info in form: house, bar, park, nightclub, etc.
+    name = db.Column(db.String(50), unique=True, index=True, nullable=False)
+    addr_1 = db.Column(db.String(100), unique=True, nullable=True)
+    addr_2 = db.Column(db.String(100), unique=True, nullable=True)
+    city = db.Column(db.String(50), nullable=True)
+    postal_code = db.Column(db.String(12), nullable=False)
+    state = db.Column(db.String(50), nullable=True)
+    country = db.Column(db.String(50), default='United States', nullable=False)
+
+    def __repr__(self):
+        repr_str = '<User: \
+                    id={} \
+                    category={} \
+                    name={} \
+                    addr_1={} \
+                    addr_2={} \
+                    city={} \
+                    postal_code={} \
+                    state={} \
+                    country={}>'
+
+        return repr_str.format(
+                    self.id,
+                    self.category,
+                    self.name,
+                    self.addr_1,
+                    self.addr_2,
+                    self.city,
+                    self.postal_code,
+                    self.state,
+                    self.country)
+
+
 class Event(db.Model):
     """Events model."""
 
@@ -157,11 +156,11 @@ class Event(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True, unique=True)
     private = db.Column(db.Boolean, default=False, nullable=False)
     host_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    venue = db.Column(db.String(50), db.ForeignKey('venues.id')) #Form prompts adding venue or searching for venue before creating event
+    venue = db.Column(db.Integer, db.ForeignKey('venues.id')) # Form prompts adding venue or searching for venue before creating event
     title = db.Column(db.String(100), nullable=False)
-    begin_at = db.Column(db.DateTime, nullable=False, index=True)
-    end_at = db.Column(db.DateTime, nullable=False)
-    max_cap = db.Column(db.String(50), nullable=True)
+    begin_at = db.Column(db.DateTime, nullable=False, index=True) # YYYY-MM-DD HH:MI:SS
+    end_at = db.Column(db.DateTime, nullable=False) # YYYY-MM-DD HH:MI:SS
+    max_cap = db.Column(db.Integer, nullable=True)
     url = db.Column(db.String(100), unique=True, nullable=False)
 
     def __repr__(self):
@@ -184,7 +183,7 @@ class Event(db.Model):
                     self.title,
                     self.begin_at,
                     self.end_at,
-                    self.max_cap
+                    self.max_cap,
                     self.url)
 
 class Invited(db.Model):
