@@ -115,10 +115,10 @@ class Venue(db.Model):
     __tablename__ = 'venues'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True, unique=True)
-    category = db.Column(db.Integer, db.ForeignKey('categories_subcategories.id'), nullable=True) #User prompts info in form: house, bar, park, nightclub, etc.
+    subcategory_id = db.Column(db.Integer, db.ForeignKey('categories_subcategories.id'), nullable=True) #User prompts info in form: house, bar, park, nightclub, etc.
     name = db.Column(db.String(50), unique=True, index=True, nullable=False)
-    addr_1 = db.Column(db.String(100), unique=True, nullable=True)
-    addr_2 = db.Column(db.String(100), unique=True, nullable=True)
+    addr_1 = db.Column(db.String(100), nullable=True)
+    addr_2 = db.Column(db.String(100), nullable=True)
     city = db.Column(db.String(50), nullable=True)
     postal_code = db.Column(db.String(12), nullable=False)
     state = db.Column(db.String(50), nullable=True)
@@ -127,7 +127,7 @@ class Venue(db.Model):
     def __repr__(self):
         repr_str = '<User: \
                     id={} \
-                    category={} \
+                    subcategory_id={} \
                     name={} \
                     addr_1={} \
                     addr_2={} \
@@ -138,7 +138,7 @@ class Venue(db.Model):
 
         return repr_str.format(
                     self.id,
-                    self.category,
+                    self.subcategory_id,
                     self.name,
                     self.addr_1,
                     self.addr_2,
@@ -156,7 +156,7 @@ class Event(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True, unique=True)
     private = db.Column(db.Boolean, default=False, nullable=False)
     host_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    venue = db.Column(db.Integer, db.ForeignKey('venues.id')) # Form prompts adding venue or searching for venue before creating event
+    venue_id = db.Column(db.Integer, db.ForeignKey('venues.id')) # Form prompts adding venue or searching for venue before creating event
     title = db.Column(db.String(100), nullable=False)
     begin_at = db.Column(db.DateTime, nullable=False, index=True) # YYYY-MM-DD HH:MI:SS
     end_at = db.Column(db.DateTime, nullable=False) # YYYY-MM-DD HH:MI:SS

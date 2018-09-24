@@ -1,10 +1,9 @@
 from sqlalchemy import func
-from model import Category_Subcategory
-from model import Category, User, Venue, Event
+from model import Category, User, Venue, Event, Category_Subcategory
 
 from server import app
 from model import connect_to_db, db
-
+from datetime import datetime
 
 def load_categories():
     """Load venue categories into database"""
@@ -15,7 +14,7 @@ def load_categories():
 
     for row in open("seed_data/categories.csv"):
         row = row.rstrip()
-        category_id, name = row.split(',')
+        name = row.split(',')
 
 
         cat = Category(name=name)
@@ -106,17 +105,18 @@ def load_venues():
 
     for row in open("seed_data/venues.csv"):
         row = row.rstrip()
-        category, \
-        name, \
+        subcategory, \
+        title, \
         addr_1, \
         addr_2, \
         city, \
         postal_code, \
         state = row.split(',')
 
+        cat_sub = Category_Subcategory.query.filter_by(name=subcategory).first()
 
-        vnu = Venue(category=category,
-                   name=name,
+        vnu = Venue(subcategory_id=cat_sub.id,
+                   name=title,
                    addr_1=addr_1,
                    addr_2=addr_2,
                    city=city,
@@ -140,15 +140,23 @@ def load_events():
         host_id, \
         venue, \
         title, \
-        begin_at, \
-        end_at, \
+        time_begin, \
+        time_end, \
         max_cap, \
         url = row.split(',')
 
+        private = int(private)
+        host_id = int(host_id)
+
+        ven = Venue.query.filter_by(name=venue).first()
+
+        begin_at = datetime.strptime(time_begin, "%y-%m-%d %H:%M:%S")
+
+        end_at = datetime.strptime(time_end, "%y-%m-%d %H:%M:%S")
 
         evt = Event(private=private,
                    host_id=host_id,
-                   venue=venue,
+                   venue_id=ven.id,
                    title=title,
                    begin_at=begin_at,
                    end_at=end_at,
