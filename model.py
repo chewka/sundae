@@ -1,5 +1,5 @@
 """Models and database functions for Sundae db."""
-
+from server import app
 from flask_sqlalchemy import SQLAlchemy
 
 # User: indexed by 'email' and by 'id'
@@ -280,6 +280,7 @@ def connect_to_db(app):
 
     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres:///sundae'
     app.config['SQLALCHEMY_ECHO'] = False
+    app.config['SECRET_KEY'] = 'secreto'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.app = app
     db.init_app(app)
