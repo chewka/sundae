@@ -104,6 +104,7 @@ def load_venues():
     for row in open("seed_data/venues.csv"):
         row = row.rstrip()
         subcategory, \
+        created_by, \
         title, \
         addr_1, \
         addr_2, \
@@ -114,6 +115,7 @@ def load_venues():
         cat_sub = Category_Subcategory.query.filter_by(name=subcategory).first()
 
         vnu = Venue(subcategory_id=cat_sub.id,
+                   created_by=created_by,
                    name=title,
                    addr_1=addr_1,
                    addr_2=addr_2,

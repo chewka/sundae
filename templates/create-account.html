@@ -6,48 +6,68 @@ Sign Up
 <link rel="stylesheet" href="{{url_for('.static', filename='signin.css')}}">
 {% endblock %}
 
-{{% block content %}
+{% block content %}
 <div class="container">
   <h3>Create an account to host events!</h3>
   <form class="form-login" action="/create-account" method="POST">
     <table>
       <tr>
         <td>username</td>
-        <td><input type="textbox" name="username">
+        <td>
+          <input type="textbox" name="username">
         </td>
       </tr>
       <tr>
         <td>password</td>
-        <td><input type="textbox" name="password">
+        <td>
+          <input type="textbox" name="password">
         </td>
       </tr>
       <tr>
+        <td><hr></td>
+        <td><hr></td>
+      </tr>
+      <tr>
         <td>first name</td>
-        <td><input type="textbox" name="fname">
+        <td>
+          <input type="textbox" name="fname">
         </td>
       </tr>
       <tr>
         <td>last name</td>
-        <td><input type="textbox" name="lname">
+        <td>
+          <input type="textbox" name="lname">
         </td>
       </tr>
       <tr>
-        <td>E-mail address</td>
-        <td><input type="textbox" name="email">
+        <td><hr></td>
+        <td><hr></td>
+      </tr>
+      <tr>
+        <td>e-mail address</td>
+        <td>
+          <input type="textbox" name="email">
         </td>
       </tr>
 	    <tr>
 		    <td>zip code</td>
-		    <td><input type="textbox" name="zip_code">
+		    <td>
+          <input type="textbox" name="zip_code">
         </td>
 	    </tr>
       <tr>
         <td>phone number</td>
-        <td><input type="textbox" name="phone">
+        <td>
+          <input type="textbox" name="phone">
         </td>
       </tr>
       <tr>
-        <td><button class="btn btn-lg btn-primary btn-block" type="submit">Sign In</button>
+        <td><hr></td>
+        <td><hr></td>
+      </tr>
+      <tr>
+        <td>
+          <button type="submit">Create an account</button>
         </td>
       </tr>
     </table>

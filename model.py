@@ -30,7 +30,7 @@ class User(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True, unique=True)
     username = db.Column(db.String(22), unique=True, nullable=True)
-    password = db.Column(db.String(22), nullable=False, default="thewholealphabetabcdefghijklmnopqrstuvwxyz")
+    password = db.Column(db.String(22), nullable=False, default="nadamucho")
     fname = db.Column(db.String(22), nullable=True)
     lname = db.Column(db.String(22), nullable=True)
     email = db.Column(db.String(100), unique=True, index=True, nullable=False)
@@ -120,6 +120,7 @@ class Venue(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True, unique=True)
     subcategory_id = db.Column(db.Integer, db.ForeignKey('categories_subcategories.id'), nullable=True) #User prompts info in form: house, bar, park, nightclub, etc.
+    created_by = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     name = db.Column(db.String(50), unique=True, index=True, nullable=False)
     addr_1 = db.Column(db.String(100), nullable=True)
     addr_2 = db.Column(db.String(100), nullable=True)
@@ -132,6 +133,7 @@ class Venue(db.Model):
         repr_str = '<User: \
                     id={} \
                     subcategory_id={} \
+                    created_by={} \
                     name={} \
                     addr_1={} \
                     addr_2={} \
@@ -143,6 +145,7 @@ class Venue(db.Model):
         return repr_str.format(
                     self.id,
                     self.subcategory_id,
+                    self.created_by,
                     self.name,
                     self.addr_1,
                     self.addr_2,
