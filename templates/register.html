@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Host an event!
+{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="static/form.css">
+{% endblock %}
+
+<div id="flash">
+{% for flash in get_flashed_messages() %}
+  {{ flash }}
+{% endfor %}
+</div>
+
+{% block content %}
+<div class="container">
+  <h4>Register your venue</h4>
+  <p>Find or create an existing venue</p>
+  <hr>
+  <h4> SEARCH </h4>
+  <form class="create" action="/create" method="POST">
+    <table>
+      <tr>
+        <td>venue name</td>
+        <td>
+          <input type="textbox" name="name" required>
+        </td>
+      </tr>
+      <tr>
+        <td><hr></td>
+        <td><hr></td>
+      </tr>
+      <tr>
+        <td>
+          <button type="submit">search for venue </button>
+        </td>
+      </tr>
+    </table>
+  </form>
+  </form>
+  <hr>
+  <h4> CREATE </h4>
+  <form class="create" action="/create" method="POST">
+    <table>
+      <tr>
+        <td>venue name</td>
+        <td>
+          <input type="textbox" name="name" required>
+        </td>
+      </tr>
+      <tr>
+        <td>address</td>
+        <td>
+          <input type="textbox" name="addr_1" required>
+        </td>
+      </tr>
+      <tr>
+        <td> </td>
+        <td>
+          <input type="textbox" name="addr_2" required>
+        </td>
+      </tr>
+      <tr>
+        <td><hr></td>
+        <td><hr></td>
+      </tr>
+      <tr>
+        <td>city</td>
+        <td>
+          <input type="textbox" name="city" required>
+        </td>
+      </tr>
+      <tr>
+        <td>state</td>
+        <td>
+          <input type="textbox" name="state" required>
+        </td>
+      </tr>
+      <tr>
+        <td><hr></td>
+        <td><hr></td>
+      </tr>
+	    <tr>
+		    <td>postal code</td>
+		    <td>
+          <input type="textbox" name="postal_code" required>
+        </td>
+	    </tr>
+      <tr>
+        <td>country</td>
+        <td>
+          <input type="textbox" name="country" value="United States">
+        </td>
+      </tr>
+      <tr>
+        <td><hr></td>
+        <td><hr></td>
+      </tr>
+      <tr>
+        <td>category</td>
+        <td>
+          <input type="textbox" name="subcategory" value="United States">
+        </td>
+      </tr>
+      <tr>
+        <td><hr></td>
+        <td><hr></td>
+      </tr>
+      <tr>
+        <td>
+          <button type="submit">create new venue </button>
+        </td>
+      </tr>
+    </table>
+  </form>
+
+
+
+</div> <!-- /container -->
+{% endblock %}

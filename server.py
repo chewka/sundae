@@ -21,6 +21,18 @@ def calendar():
     else:
         return redirect('/join')
 
+@app.route('/create', methods=['GET', 'POST'])
+def create():
+#@login_required
+    if 'user_id' not in session:
+        redirect('/email')
+
+    if request.method == 'POST':
+        #somehow render the custom url
+        return redirect('/event')
+    else:
+        return redirect('/register')
+
 @app.route('/email', methods=['POST', 'GET'])
 def check_email():
     """Looks for email in users and sends user_id to join route; \
@@ -28,36 +40,25 @@ def check_email():
 
     if request.method == 'POST':
         email = request.form.get('email')
+        user = User.query.filter_by(email=email).first()
+        session['user_id'] = user.id
 
-        if User.query.filter_by(email=email).first() \
-           and User.query.filter_by(role='sundae').first():
+        if user and user.role == 'sundae':
             flash("You've been here before! Let's get you set up")
-            user = User.query.filter_by(email=email).first()
-            session['user_id'] = user.id
-            return redirect('/join', email=user.email) #sends to join
+            return redirect('/join') #, email=user.email) #sends to join
 
-        if User.query.filter_by(email=email).first() \
-           and User.query.filter_by(role='user').first():
-            user = User.query.filter_by(email=email).first()
-            session['user_id'] = user.id
-            render_template('/VIP-only', email=user.email) #sends to login
+        if user and user.role ==  'user':
+            render_template('/VIP-only.html') #, email=user.email) #sends to login
 
         else:
             user = User(email=email)
             db.session.add(user)
             db.session.commit()
             session['user_id'] = user.id
-            return redirect('/join', email=user.email) #sends to join
+            return redirect('/join') #, email=user.email) #sends to join
 
     return render_template('email.html')
 
-@app.route('/create', methods=['GET', 'POST'])
-def create():
-    if request.method == 'POST':
-        #somehow render the custom url
-        return redirect('/event')
-    else:
-        return render_template('/create.html')
 
 @app.route('/exit') #login required
 def exit():
@@ -78,20 +79,36 @@ def join():
         if request.method == 'POST':
             username = request.form.get('username')
             password = request.form.get('password')
+            fname = request.form.get('fname')
+            lname = request.form.get('lname')
             postal_code = request.form.get('postal_code')
+            phone = request.form.get('phone')
             role = 'user'
 
-            session.query().\
-            filter(User.id == session['user_id']).\
+            usr_id = session['user_id']
+
+            db.session.query().\
+            filter(User.id == usr_id).\
             update({"username": (username), \
                     "password": (password), \
+                    "fname": (fname), \
+                    "lname": (lname), \
                     "postal_code": (postal_code), \
+                    "phone": (phone), \
                     "role": (role)})
-            session.commit()
+            db.session.commit()
 
             return redirect('/intro')
         return render_template('/join.html')
     return redirect('/email')
+
+@app.route('/register')
+def register_venue():
+    return render_template('/register.html')
+
+@app.route('/socials', methods=['GET'])
+def show_socials():
+    return render_template('/socials.html') #, event_url=url)
 
 @app.route('/RSVP', methods=['GET'])
 def RSVP():
