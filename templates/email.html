@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Enter your email
+{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="static/form.css">
+{% endblock %}
+
+<div id="flash">
+{% for flash in get_flashed_messages() %}
+  {{ flash }}
+{% endfor %}
+</div>
+
+{% block content %}
+<div class="container">
+  <h4>Let's get started!</h4>
+  <h6>We only need your email to begin</h6>
+  <hr>
+
+  <form class="form-login" action="/email" method="POST">
+    <table>
+      <tr>
+        <td>email address &nbsp </td>
+        <td>
+          {% if "user_id" in session %}
+            <input type="email" name="email" value="{{ email }}" required>
+          {% else %}
+            <input type="email" name="email" required>
+          {% endif %}
+        </td>
+      </tr>
+    </table>
+    <hr>
+      <button type="submit">Let's go!</button>
+  </form>
+</div> <!-- /container -->
+{% endblock %}

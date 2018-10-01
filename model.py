@@ -3,9 +3,9 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
 
 # User: indexed by 'email' and by 'id'
-# User: required values = email, zip_code, role (default='user'), authorized (default=True)
+# User: required values = email, postal_code, role (default='user'), authorized (default=True)
 # Venues: indexed by 'name'
-# Venues: required values = name, category, zip_code, country (default='United States')
+# Venues: required values = name, category, postal_code, country (default='United States')
 # Events: indexed by 'begin_at'
 # Events: required values = all except 'max_cap'
 # To create a user: only need an email and zip code
@@ -34,7 +34,7 @@ class User(db.Model):
     fname = db.Column(db.String(22), nullable=True)
     lname = db.Column(db.String(22), nullable=True)
     email = db.Column(db.String(100), unique=True, index=True, nullable=False)
-    zip_code = db.Column(db.String(5), nullable=False, default=94710)
+    postal_code = db.Column(db.String(12), nullable=True, default=94710)
     phone = db.Column(db.String(15), unique=True, nullable=True)
     role = db.Column(db.String(15), default='sundae', nullable=False) #permissions: admin, host, user
     authorized = db.Column(db.Boolean, default=True, nullable=False) #security: protect against blocked users
@@ -51,7 +51,7 @@ class User(db.Model):
                     fname={} \
                     lname={} \
                     email={} \
-                    zip_code={} \
+                    postal_code={} \
                     phone={} \
                     role={} \
                     authorized={}>'
@@ -63,7 +63,7 @@ class User(db.Model):
                     self.fname,
                     self.lname,
                     self.email,
-                    self.zip_code,
+                    self.postal_code,
                     self.phone,
                     self.role,
                     self.authorized)
@@ -125,7 +125,7 @@ class Venue(db.Model):
     addr_1 = db.Column(db.String(100), nullable=True)
     addr_2 = db.Column(db.String(100), nullable=True)
     city = db.Column(db.String(50), nullable=True)
-    zip_code = db.Column(db.String(12), nullable=False)
+    postal_code = db.Column(db.String(12), nullable=False)
     state = db.Column(db.String(50), nullable=True)
     country = db.Column(db.String(50), default='United States', nullable=False)
 
@@ -138,7 +138,7 @@ class Venue(db.Model):
                     addr_1={} \
                     addr_2={} \
                     city={} \
-                    zip_code={} \
+                    postal_code={} \
                     state={} \
                     country={}>'
 
@@ -150,7 +150,7 @@ class Venue(db.Model):
                     self.addr_1,
                     self.addr_2,
                     self.city,
-                    self.zip_code,
+                    self.postal_code,
                     self.state,
                     self.country)
 

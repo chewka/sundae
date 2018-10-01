@@ -29,3 +29,12 @@ def logout():
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000, host='0.0.0.0')
+#
+#
+#
+#          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+#          <a class="dropdown-item" href="/hosting">hosting</a>
+#          <a class="dropdown-item" href="/attending">attending</a>
+#          <a class="dropdown-item" href="/interested">interested</a>
+#          <a class="dropdown-item" href="/invited">invited</a>
+#          <a class="dropdown-item" href="/confirmed">confirmed</a>

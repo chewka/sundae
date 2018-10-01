@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>{% block title %}{% endblock %}</title>
+  <link rel="icon" href="{{cdn}}/img/icon/favicon.ico" type="image/x-icon" />
+  <link rel="Shortcut Icon" href="{{cdn}}/img/icon/favicon.ico" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  {% block styles %}
+  {% endblock %}
+
+  {% block scripts %}
+  {% endblock %}
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="description" content="{% block meta_desc %}{% endblock %}" />
+  <meta name="keywords" content="{% block meta_keywords %}{% endblock %}" />
+</head>
+
+
+
+
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+        <a href="/" class="navbar-brand">sundae</a>
+        <button class="navbar-toggler float-right" type="button" data-toggle="collapse" data-target="#navbar9">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse" id="navbar9">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/create">create</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/calendar">calendar</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/socials">socials</a>
+                </li>
+                <li class="nav-item">
+                  {% if "user_id" in session %}
+                    <a class="nav-link" href="/exit">exit</a>
+                  {% else %}
+                    <a class="nav-link" href="/join">VIP</a>
+                  {% endif %}
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<container>
+ {% block content %}{% endblock %}
+</container>
+
+</body>
+</html>

@@ -1,26 +1,39 @@
+{% extends 'base.html' %}
+
 {% block title %}
-Sign Up
+Create an account to host events!
 {% endblock %}
 
 {% block styles %}
-<link rel="stylesheet" href="{{url_for('.static', filename='signin.css')}}">
+<link rel="stylesheet" href="static/form.css">
 {% endblock %}
+
+<div id="flash">
+{% for flash in get_flashed_messages() %}
+  {{ flash }}
+{% endfor %}
+</div>
 
 {% block content %}
 <div class="container">
-  <h3>Create an account to host events!</h3>
-  <form class="form-login" action="/create-account" method="POST">
+  <form class="form-login" action="/join" method="POST">
     <table>
+      <tr>
+        <td>e-mail address</td>
+        <td>
+        <input type="email" name="email" value="{{ email }}" required>
+        </td>
+      </tr>
       <tr>
         <td>username</td>
         <td>
-          <input type="textbox" name="username">
+          <input type="textbox" name="username" required>
         </td>
       </tr>
       <tr>
         <td>password</td>
         <td>
-          <input type="textbox" name="password">
+          <input type="password" name="password" required>
         </td>
       </tr>
       <tr>
@@ -30,29 +43,23 @@ Sign Up
       <tr>
         <td>first name</td>
         <td>
-          <input type="textbox" name="fname">
+          <input type="textbox" name="fname" required>
         </td>
       </tr>
       <tr>
         <td>last name</td>
         <td>
-          <input type="textbox" name="lname">
+          <input type="textbox" name="lname" required>
         </td>
       </tr>
       <tr>
         <td><hr></td>
         <td><hr></td>
-      </tr>
-      <tr>
-        <td>e-mail address</td>
-        <td>
-          <input type="textbox" name="email">
-        </td>
       </tr>
 	    <tr>
 		    <td>zip code</td>
 		    <td>
-          <input type="textbox" name="zip_code">
+          <input type="textbox" name="postal_code" required>
         </td>
 	    </tr>
       <tr>

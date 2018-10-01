@@ -1,17 +1,22 @@
+{% extends 'base.html' %}
+
 {% block title %}
-Sundae
+Sundae Socials
 {% endblock %}
 
 {% block styles %}
-<link rel="stylesheet" href="{{url_for('.static', filename='dashboard.css')}}">
+<link rel="stylesheet" href="static/styles.css">
 {% endblock %}
 
 {% block content %}
-    <nav> Navigation </nav>
-    <a href="/login">Log in</a>
-    <a href="/create-account">Create an account</a>
-    <a href="/make-an-event">Make an event</a>
+<div class="container">
 
+<h2>LOCATION:</h2>
 
+<h2>TODAY'S EVENTS:</h2>
+
+<h2>TOMORROW'S EVENTS</h2>
+
+</div>
 
 {% endblock %}

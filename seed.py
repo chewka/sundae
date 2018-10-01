@@ -51,11 +51,11 @@ def load_sundaes():
 
     for row in open("seed_data/sundaes.csv"):
         row = row.rstrip()
-        email, zip_code = row.split(',')
+        email, postal_code = row.split(',')
 
 
         usr = User(email=email,
-                   zip_code=zip_code)
+                   postal_code=postal_code)
 
         db.session.add(usr)
 
@@ -71,7 +71,7 @@ def load_users():
         row = row.rstrip()
 
         email, \
-        zip_code, \
+        postal_code, \
         fname, \
         lname, \
         username, \
@@ -81,7 +81,7 @@ def load_users():
 
 
         usr = User(email=email,
-                   zip_code=zip_code,
+                   postal_code=postal_code,
                    fname=fname,
                    lname=lname,
                    username=username,
@@ -109,7 +109,7 @@ def load_venues():
         addr_1, \
         addr_2, \
         city, \
-        zip_code, \
+        postal_code, \
         state = row.split(',')
 
         cat_sub = Category_Subcategory.query.filter_by(name=subcategory).first()
@@ -120,7 +120,7 @@ def load_venues():
                    addr_1=addr_1,
                    addr_2=addr_2,
                    city=city,
-                   zip_code=zip_code,
+                   postal_code=postal_code,
                    state=state)
 
         db.session.add(vnu)

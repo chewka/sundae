@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Host an event!
+{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="static/form.css">
+{% endblock %}
+
+<div id="flash">
+{% for flash in get_flashed_messages() %}
+  {{ flash }}
+{% endfor %}
+</div>
+
+{% block content %}
+<div class="container">
+  <form class="create" action="/join" method="POST">
+    <table>
+      <tr>
+        <td>e-mail address</td>
+        <td>
+          <!---<input type="email" name="email" value="{{ email }}" required>-->
+        </td>
+      </tr>
+      <tr>
+        <td>username</td>
+        <td>
+          <input type="textbox" name="username" required>
+        </td>
+      </tr>
+      <tr>
+        <td>password</td>
+        <td>
+          <input type="password" name="password" required>
+        </td>
+      </tr>
+      <tr>
+        <td><hr></td>
+        <td><hr></td>
+      </tr>
+      <tr>
+        <td>first name</td>
+        <td>
+          <input type="textbox" name="fname" required>
+        </td>
+      </tr>
+      <tr>
+        <td>last name</td>
+        <td>
+          <input type="textbox" name="lname" required>
+        </td>
+      </tr>
+      <tr>
+        <td><hr></td>
+        <td><hr></td>
+      </tr>
+	    <tr>
+		    <td>zip code</td>
+		    <td>
+          <input type="textbox" name="postal_code" required>
+        </td>
+	    </tr>
+      <tr>
+        <td>phone number</td>
+        <td>
+          <input type="textbox" name="phone">
+        </td>
+      </tr>
+      <tr>
+        <td><hr></td>
+        <td><hr></td>
+      </tr>
+      <tr>
+        <td>
+          <button type="submit">Create an account</button>
+        </td>
+      </tr>
+    </table>
+  </form>
+
+</div> <!-- /container -->
+{% endblock %}
