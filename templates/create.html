@@ -17,17 +17,18 @@ Host an event!
 {% block content %}
 <div class="container">
   <form class="create" action="/create" method="POST">
+    <h5>Create your event!</h5>
     <table>
       <tr>
-        <td>username</td>
+        <td>title</td>
         <td>
-          <input type="textbox" name="username" required>
+          <input type="textbox" name="title" required>
         </td>
       </tr>
       <tr>
-        <td>password</td>
+        <td>info</td>
         <td>
-          <input type="password" name="password" required>
+          <input type="textbox" name="info" required>
         </td>
       </tr>
       <tr>
@@ -35,15 +36,15 @@ Host an event!
         <td><hr></td>
       </tr>
       <tr>
-        <td>first name</td>
+        <td>begins at</td>
         <td>
-          <input type="textbox" name="fname" required>
+          <input type="textbox" name="begin_at" required>
         </td>
       </tr>
       <tr>
-        <td>last name</td>
+        <td>ends at</td>
         <td>
-          <input type="textbox" name="lname" required>
+          <input type="textbox" name="end_at" required>
         </td>
       </tr>
       <tr>
@@ -51,15 +52,15 @@ Host an event!
         <td><hr></td>
       </tr>
 	    <tr>
-		    <td>zip code</td>
+		    <td>max cap</td>
 		    <td>
-          <input type="textbox" name="postal_code" required>
+          <input type="textbox" name="max_cap" required>
         </td>
 	    </tr>
       <tr>
-        <td>phone number</td>
+        <td>custom url</td>
         <td>
-          <input type="textbox" name="phone">
+          <input type="textbox" name="url">
         </td>
       </tr>
       <tr>
@@ -68,7 +69,7 @@ Host an event!
       </tr>
       <tr>
         <td>
-          <button type="submit">Create an account</button>
+          <button type="submit">Let's get social!</button>
         </td>
       </tr>
     </table>

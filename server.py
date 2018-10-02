@@ -3,11 +3,15 @@ from jinja2 import StrictUndefined
 from flask import Flask, render_template, redirect, request, flash, session
 #from flask_debugtoolbar import DebugToolbarExtension
 from flask_sqlalchemy  import SQLAlchemy
-from werkzeug.security import generate_password_hash, check_password_hash
+#from werkzeug.security import generate_password_hash, check_password_hash
 from model import User, Venue, Event, Category, connect_to_db, db
 
 app = Flask(__name__)
 app.secret_key = "ABC"
+
+# def login_required(f):
+#         if not session.get('user_id'):
+#             return redirect('/join')
 
 @app.route('/')
 def index():
@@ -17,7 +21,7 @@ def index():
 #@login-required
 def calendar():
     if 'user_id' in session:
-        return render_template('caldendar.html')
+        return render_template('calendar.html')
     else:
         return redirect('/join')
 
@@ -41,21 +45,24 @@ def check_email():
     if request.method == 'POST':
         email = request.form.get('email')
         user = User.query.filter_by(email=email).first()
-        session['user_id'] = user.id
 
         if user and user.role == 'sundae':
             flash("You've been here before! Let's get you set up")
+            session['user_id'] = user.id
             return redirect('/join') #, email=user.email) #sends to join
 
         if user and user.role ==  'user':
-            render_template('/VIP-only.html') #, email=user.email) #sends to login
+            email = user.email
+            session['user_id'] = user.id
+            return render_template('/VIP-only.html') #, email=email) #sends to login
 
         else:
             user = User(email=email)
             db.session.add(user)
             db.session.commit()
             session['user_id'] = user.id
-            return redirect('/join') #, email=user.email) #sends to join
+            email = user.email
+            return redirect('/join') #, email=email) #sends to join
 
     return render_template('email.html')
 
@@ -63,9 +70,10 @@ def check_email():
 @app.route('/exit') #login required
 def exit():
     #clear sessions? session[]
-    return redirect(url_for('index'))
+    session.pop('user_id', None)
+    return redirect('/')
 
-@app.route('/home') #VIP-only required
+@app.route('/home') #VIP-only login
 def home():
     return render_template('home.html')
 
@@ -83,19 +91,19 @@ def join():
             lname = request.form.get('lname')
             postal_code = request.form.get('postal_code')
             phone = request.form.get('phone')
-            role = 'user'
 
             usr_id = session['user_id']
 
-            db.session.query().\
-            filter(User.id == usr_id).\
-            update({"username": (username), \
-                    "password": (password), \
-                    "fname": (fname), \
-                    "lname": (lname), \
-                    "postal_code": (postal_code), \
-                    "phone": (phone), \
-                    "role": (role)})
+            user = User.query.get(usr_id)
+
+            user.username = username
+            user.password = password
+            user.fname = fname
+            user.lname = lname
+            user.postal_code = postal_code
+            user.phone = phone
+            user.role = 'user'
+
             db.session.commit()
 
             return redirect('/intro')
@@ -130,6 +138,9 @@ def VIP_only():
             return redirect('join.html')
     return render_template('VIP-only.html')
 
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
 
 if __name__ == '__main__':
     connect_to_db(app)

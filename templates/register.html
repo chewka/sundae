@@ -16,36 +16,16 @@ Host an event!
 
 {% block content %}
 <div class="container">
-  <h4>Register your venue</h4>
-  <p>Find or create an existing venue</p>
+  <p></p>
+  <h4>Register</h4>
+  <p></p>
   <hr>
-  <h4> SEARCH </h4>
+  <p></p>
+  <legend>VENUE</legend>
   <form class="create" action="/create" method="POST">
     <table>
       <tr>
-        <td>venue name</td>
-        <td>
-          <input type="textbox" name="name" required>
-        </td>
-      </tr>
-      <tr>
-        <td><hr></td>
-        <td><hr></td>
-      </tr>
-      <tr>
-        <td>
-          <button type="submit">search for venue </button>
-        </td>
-      </tr>
-    </table>
-  </form>
-  </form>
-  <hr>
-  <h4> CREATE </h4>
-  <form class="create" action="/create" method="POST">
-    <table>
-      <tr>
-        <td>venue name</td>
+        <td>name</td>
         <td>
           <input type="textbox" name="name" required>
         </td>
@@ -57,7 +37,7 @@ Host an event!
         </td>
       </tr>
       <tr>
-        <td> </td>
+        <td></td>
         <td>
           <input type="textbox" name="addr_2" required>
         </td>
@@ -101,7 +81,19 @@ Host an event!
       <tr>
         <td>category</td>
         <td>
-          <input type="textbox" name="subcategory" value="United States">
+          <select name="category">
+            <option value="select" selected disabled hidden>Select</option>
+				    <option value="arts">Arts & Entertainment</option>
+				    <option value="college">College & University</option>
+				    <option value="event">Event</option>
+				    <option value="food">Food</option>
+				    <option value="nightlife">Nighlife Spot</option>
+            <option value="outdoors">Outdoors & Recreation</option>
+            <option value="professional">Professional & Other Places</option>
+            <option value="residence">Residence</option>
+            <option value="shop">Shop & Service</option>
+            <option value="travel">Travel & Transport</option>
+			</select>
         </td>
       </tr>
       <tr>
@@ -115,8 +107,27 @@ Host an event!
       </tr>
     </table>
   </form>
+</div>
 
+ <!-- <h4> SEARCH </h4>
+ <form class="create" action="/create" method="POST">
+   <table>
+     <tr>
+       <td>venue name</td>
+       <td>
+         <input type="textbox" name="name" required>
+       </td>
+     </tr>
+     <tr>
+       <td><hr></td>
+       <td><hr></td>
+     </tr>
+     <tr>
+       <td>
+         <button type="submit">search for venue </button>
+       </td>
+     </tr>
+   </table>
+ </form> -->
 
-
-</div> <!-- /container -->
 {% endblock %}

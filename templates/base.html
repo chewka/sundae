@@ -41,7 +41,7 @@
                     <a class="nav-link" href="/socials">socials</a>
                 </li>
                 <li class="nav-item">
-                  {% if "user_id" in session %}
+                  {% if 'user_id' in session %}
                     <a class="nav-link" href="/exit">exit</a>
                   {% else %}
                     <a class="nav-link" href="/join">VIP</a>
@@ -51,7 +51,7 @@
         </div>
     </div>
 </nav>
-
+<p></p>
 <container>
  {% block content %}{% endblock %}
 </container>
