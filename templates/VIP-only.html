@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Create an account: join the club.
+VIP only: join the club.
 {% endblock %}
 
 {% block styles %}
@@ -10,13 +10,15 @@ Create an account: join the club.
 
 {% block content %}
 <div class="container">
-  <h3>Enter your info to login!</h3>
-  <form class="form-login" action="/login" method="POST">
+  <h4>VIP Only: Are you on the list?</h4>
+  <h6>&#9758; enter your info to login</h6>
+  <hr>
+  <form class="form-login" action="/VIP-only" method="POST">
     <table>
       <tr>
         <td>e-mail</td>
         <td>
-          <input type="email" name="email" required>
+          <input type="email" name="email" value="{{ email }}" required>
         </td>
       </tr>
       <tr>

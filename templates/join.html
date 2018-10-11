@@ -8,20 +8,13 @@ Create an account to host events!
 <link rel="stylesheet" href="static/form.css">
 {% endblock %}
 
-<div id="flash">
-{% for flash in get_flashed_messages() %}
-  {{ flash }}
-{% endfor %}
-</div>
-
 {% block content %}
 <div class="container">
+  <h4>Update your account</h4>
+  <h6>&#9758; add a little more info</h6>
+  <hr>
   <form class="form-login" action="/join" method="POST">
     <table>
-      <tr>
-        <td><hr></td>
-        <td><hr></td>
-      </tr>
       <tr>
         <td>username</td>
         <td>
@@ -41,13 +34,13 @@ Create an account to host events!
       <tr>
         <td>first name</td>
         <td>
-          <input type="textbox" name="fname" required>
+          <input type="textbox" name="fname" value="{{ fname }}" required>
         </td>
       </tr>
       <tr>
         <td>last name</td>
         <td>
-          <input type="textbox" name="lname" required>
+          <input type="textbox" name="lname" value="{{ lname }}" required>
         </td>
       </tr>
       <tr>
@@ -57,13 +50,13 @@ Create an account to host events!
 	    <tr>
 		    <td>postal code</td>
 		    <td>
-          <input type="textbox" name="postal_code" required>
+          <input type="textbox" name="postal_code" value="{{ postal_code }}" required>
         </td>
 	    </tr>
       <tr>
         <td>phone number</td>
         <td>
-          <input type="textbox" name="phone">
+          <input type="textbox" name="phone" value="{{ phone }}">
         </td>
       </tr>
       <tr>
@@ -72,7 +65,7 @@ Create an account to host events!
       </tr>
       <tr>
         <td>
-          <button type="submit">Create an account</button>
+          <button type="submit">create an account</button>
         </td>
       </tr>
     </table>

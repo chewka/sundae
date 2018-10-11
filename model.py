@@ -36,13 +36,13 @@ class User(db.Model):
     lname = db.Column(db.String(22), nullable=True)
     email = db.Column(db.String(100), unique=True, index=True, nullable=False)
     postal_code = db.Column(db.String(12), nullable=True, default=94710)
-    phone = db.Column(db.String(15), unique=True, nullable=True)
+    phone = db.Column(db.String(15), unique=False, nullable=True)
     role = db.Column(db.String(15), default='sundae', nullable=False) #permissions: admin, host, user
     authorized = db.Column(db.Boolean, default=True, nullable=False) #security: protect against blocked users
 
-    @classmethod
-    def check_user(cls, prop):
-        return cls.query.filter_by(email=prop).first()
+    # @classmethod
+    # def check_user(cls, prop):
+    #     return cls.query.filter_by(email=prop).first()
 
     def __repr__(self):
         repr_str = '<User: \
@@ -166,11 +166,11 @@ class Event(db.Model):
     host_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     venue_id = db.Column(db.Integer, db.ForeignKey('venues.id')) # Form prompts adding venue or searching for venue before creating event
     title = db.Column(db.String(100), nullable=False)
-    info = db.Column(db.String(500), nullable=True)
+    #info = db.Column(db.String(500), nullable=True)
     begin_at = db.Column(db.DateTime, nullable=False, index=True) # YYYY-MM-DD HH:MI:SS
     end_at = db.Column(db.DateTime, nullable=False) # YYYY-MM-DD HH:MI:SS
     max_cap = db.Column(db.Integer, nullable=True)
-    url = db.Column(db.String(100), unique=True, nullable=False)
+    url = db.Column(db.String(100), unique=True, nullable=False, index=True)
 
     def __repr__(self):
         repr_str = '<User: \

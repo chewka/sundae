@@ -5,11 +5,12 @@ Home
 {% endblock %}
 
 {% block styles %}
-<link rel="stylesheet" href="{{url_for('.static', filename='home.css')}}">
 {% endblock %}
 
 {% block content %}
 <div class="container">
-  <h1> home </h1>
+  <h1> {{ title }} </h1>
+  <h2> {{ begin_at }}
+
 </div>
 {% endblock %}

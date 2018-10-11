@@ -16,9 +16,36 @@ Host an event!
 
 {% block content %}
 <div class="container">
+  <h4>Create your event!</h4>
+  <h6>&#x266B; let's party &#x266A; &#x266C; </h6>
+  <hr>
   <form class="create" action="/create" method="POST">
-    <h5>Create your event!</h5>
     <table>
+      <legend>EVENT</legend>
+      <tr>
+        <td>
+          <input type="radio" name="private" value="false"> public<br>
+        </td>
+        <td>
+          <input type="radio" name="private" value="true"> private
+        </td>
+      </tr>
+      <tr>
+        <td></td>
+      </tr>
+      <tr>
+        <td>venue</td>
+        <td>
+        <select name="venue" required>
+        {% for venue in venues %}
+        <option value="select" selected disabled hidden>Select</option>
+        <option value="{{ venue.name }}">{{ venue.name }}</option>
+        {% endfor %}
+        </td>
+      </tr>
+      <tr>
+        <td><hr></td>
+        <td><hr></td>
       <tr>
         <td>title</td>
         <td>
@@ -28,7 +55,7 @@ Host an event!
       <tr>
         <td>info</td>
         <td>
-          <input type="textbox" name="info" required>
+          <input type="textbox" name="info">
         </td>
       </tr>
       <tr>
@@ -38,13 +65,29 @@ Host an event!
       <tr>
         <td>begins at</td>
         <td>
-          <input type="textbox" name="begin_at" required>
+          <input type="date" name="begin_date" required>
         </td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>
+          <input type="time" name="begin_time" required>
+        </td>
+      </tr>
+      <tr>
+        <td><hr></td>
+        <td><hr></td>
       </tr>
       <tr>
         <td>ends at</td>
         <td>
-          <input type="textbox" name="end_at" required>
+          <input type="date" name="end_date" required>
+        </td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>
+          <input type="time" name="end_time" required>
         </td>
       </tr>
       <tr>
@@ -58,7 +101,7 @@ Host an event!
         </td>
 	    </tr>
       <tr>
-        <td>custom url</td>
+        <td>custom url </td>
         <td>
           <input type="textbox" name="url">
         </td>
@@ -67,9 +110,13 @@ Host an event!
         <td><hr></td>
         <td><hr></td>
       </tr>
+
+      </tr>
       <tr>
         <td>
-          <button type="submit">Let's get social!</button>
+        </td>
+        <td>
+          <button type="submit">get social</button>
         </td>
       </tr>
     </table>

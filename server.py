@@ -1,6 +1,8 @@
 """Sundae Socials: get together"""
 from jinja2 import StrictUndefined
-from flask import Flask, render_template, redirect, request, flash, session
+from functools import wraps
+from datetime import datetime
+from flask import Flask, render_template, redirect, request, flash, session, g
 #from flask_debugtoolbar import DebugToolbarExtension
 from flask_sqlalchemy  import SQLAlchemy
 #from werkzeug.security import generate_password_hash, check_password_hash
@@ -9,9 +11,23 @@ from model import User, Venue, Event, Category, connect_to_db, db
 app = Flask(__name__)
 app.secret_key = "ABC"
 
-# def login_required(f):
-#         if not session.get('user_id'):
-#             return redirect('/join')
+from functools import wraps
+
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if not session.get('user_id'):
+            return redirect('/join')
+        return f(*args, **kwargs)
+    return decorated_function
+
+def already_loggedin(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if session.get('user_id'):
+            return redirect('/home')
+        return f(*args, **kwargs)
+    return decorated_function
 
 @app.route('/')
 def index():
@@ -26,18 +42,53 @@ def calendar():
         return redirect('/join')
 
 @app.route('/create', methods=['GET', 'POST'])
+@login_required
 def create():
-#@login_required
-    if 'user_id' not in session:
-        redirect('/email')
-
     if request.method == 'POST':
-        #somehow render the custom url
-        return redirect('/event')
-    else:
-        return redirect('/register')
+        title = request.form.get('title')
+        #info = request.form.get('info')
+
+        begin_time = request.form.get('begin_time')
+        begin_date = request.form.get('begin_date')
+        begin_at = datetime.strptime(begin_date + ' ' + begin_time, "%Y-%m-%d %H:%M")
+        #1993-04-21 03:42
+        #2018-03-21 22:00:00
+        end_time = request.form.get('end_time')
+        end_date = request.form.get('end_date')
+        end_at = datetime.strptime(end_date + ' ' + end_time, "%Y-%m-%d %H:%M")
+        max_cap = request.form.get('max_cap')
+        url = request.form.get('url')
+        private = request.form.get('private')
+
+        host_id = session['user_id']
+        #venue_id = session['venue_id']
+        #Drop-down instead of storing in session
+
+        event = Event(title=title, \
+                      #info=info, \
+                      begin_at=begin_at, \
+                      end_at=end_at, \
+                      max_cap=max_cap, \
+                      url=url, \
+                      private=private, \
+                      host_id=host_id, \
+                      venue_id=venue_id)
+
+        db.session.add(event)
+        db.session.commit()
+
+        session.pop('venue_id', None)
+
+        #session['event_id'] = event.id
+
+        return redirect('/event/{}'.format(event.url)) #, event_url=event_url)
+
+    venues = Venue.query.order_by(Venue.name).all()
+    #flash(venues)
+    return render_template('/create.html', venues=venues)
 
 @app.route('/email', methods=['POST', 'GET'])
+@already_loggedin
 def check_email():
     """Looks for email in users and sends user_id to join route; \
        if email is not in users, redirects to creates account"""
@@ -54,7 +105,7 @@ def check_email():
         if user and user.role ==  'user':
             email = user.email
             session['user_id'] = user.id
-            return render_template('/VIP-only.html') #, email=email) #sends to login
+            return redirect('/VIP-only') # email=email) #sends to login
 
         else:
             user = User(email=email)
@@ -66,6 +117,31 @@ def check_email():
 
     return render_template('email.html')
 
+@app.route('/event/<event_url>') #VIP-only login
+def show_event(event_url):
+    event = Event.query.filter_by(url=event_url).one()
+    #venue = event.venue_id
+
+    #private = event.private
+    user_id = session['user_id']
+
+    #NEXT: CREATE INVITE LIST
+
+    #not logged in, have to give us email; session['user_id']
+
+    #if private == True and event.invites.filter_by(user_id=user_id)
+        #return render_template()
+
+    title = event.title
+    begin_at = event.begin_at
+    end_at = event.end_at
+    max_cap = event.max_cap
+
+    return render_template('event.html', title=title, \
+                                         #info=info, \
+                                         begin_at=begin_at, \
+                                         end_at=end_at, \
+                                         max_cap=max_cap)
 
 @app.route('/exit') #login required
 def exit():
@@ -74,6 +150,7 @@ def exit():
     return redirect('/')
 
 @app.route('/home') #VIP-only login
+@login_required
 def home():
     return render_template('home.html')
 
@@ -96,25 +173,64 @@ def join():
 
             user = User.query.get(usr_id)
 
-            user.username = username
-            user.password = password
-            user.fname = fname
-            user.lname = lname
-            user.postal_code = postal_code
-            user.phone = phone
-            user.role = 'user'
+            if User.query.filter_by(username=username).first():
+                flash("username already exists, please try again")
+            else:
+                user.username = username
+                user.password = password
+                user.fname = fname
+                user.lname = lname
+                user.postal_code = postal_code
+                user.phone = phone
+                user.role = 'user'
 
-            db.session.commit()
+                db.session.commit()
 
-            return redirect('/intro')
+                return redirect('/intro')
+            return render_template('/join.html', fname=fname, \
+                                                 lname=lname, \
+                                                 postal_code=postal_code, \
+                                                 phone=phone)
         return render_template('/join.html')
     return redirect('/email')
 
-@app.route('/register')
+@app.route('/register', methods=['GET', 'POST'])
+@login_required
 def register_venue():
+
+    if request.method == 'POST':
+        name = request.form.get('name')
+        addr_1 = request.form.get('addr_1')
+        addr_2 = request.form.get('addr_2')
+        city = request.form.get('city')
+        postal_code = request.form.get('postal_code')
+        state = request.form.get('state')
+        country = request.form.get('country')
+        category = request.form.get('category')
+
+        usr_id = session['user_id']
+        user = User.query.get(usr_id)
+        created_by = user.id
+
+        venue = Venue(name=name, \
+                      addr_1=addr_1, \
+                      addr_2=addr_2, \
+                      city=city, \
+                      postal_code=postal_code, \
+                      state=state, \
+                      country=country, \
+                      created_by=created_by)
+
+        db.session.add(venue)
+        db.session.commit()
+
+        session['venue_id'] = venue.id
+
+        return redirect('/create')
     return render_template('/register.html')
 
 @app.route('/socials', methods=['GET'])
+@login_required
 def show_socials():
     return render_template('/socials.html') #, event_url=url)
 
@@ -124,19 +240,19 @@ def RSVP():
 
 @app.route('/VIP-only', methods=['POST', 'GET'])
 def VIP_only():
+    user_id = session['user_id']
+    user = User.query.get(user_id)
+    email = user.email
     if request.method == 'POST':
         email = request.form.get('email')
         password = request.form.get('password')
 
-        user = User.query.filter_by(email=email).first()
-
-        if user:
+        if user.password == password and user.email == email:
             session['user_id'] = user.id
-            session['postal_code'] = user.postal_code
             return redirect('/home')
         else:
-            return redirect('join.html')
-    return render_template('VIP-only.html')
+            return redirect('/join')
+    return render_template('VIP-only.html', email=email)
 
 @app.errorhandler(404)
 def page_not_found(e):
