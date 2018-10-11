@@ -51,14 +51,20 @@ def create():
         begin_time = request.form.get('begin_time')
         begin_date = request.form.get('begin_date')
         begin_at = datetime.strptime(begin_date + ' ' + begin_time, "%Y-%m-%d %H:%M")
-        #1993-04-21 03:42
-        #2018-03-21 22:00:00
         end_time = request.form.get('end_time')
         end_date = request.form.get('end_date')
         end_at = datetime.strptime(end_date + ' ' + end_time, "%Y-%m-%d %H:%M")
         max_cap = request.form.get('max_cap')
         url = request.form.get('url')
-        private = request.form.get('private')
+        private_html = request.form.get('private')
+        if private_html == 'True':
+            private = True
+        else:
+            private = False
+        venue_name = request.form.get('venue')
+
+        venue = Venue.query.filter_by(name=venue_name).first()
+        venue_id = venue.id
 
         host_id = session['user_id']
         #venue_id = session['venue_id']
@@ -120,6 +126,7 @@ def check_email():
 @app.route('/event/<event_url>') #VIP-only login
 def show_event(event_url):
     event = Event.query.filter_by(url=event_url).one()
+    venue = Venue.query.filter_by(id=event.venue_id).first()
     #venue = event.venue_id
 
     #private = event.private
@@ -133,15 +140,21 @@ def show_event(event_url):
         #return render_template()
 
     title = event.title
-    begin_at = event.begin_at
+    begin_at = event.begin_at #strftime!!
     end_at = event.end_at
     max_cap = event.max_cap
+    url = event.url
+
+    #if user is host:
+        #show invite button --> take to a different page
 
     return render_template('event.html', title=title, \
                                          #info=info, \
+                                         venue=venue.name, \
                                          begin_at=begin_at, \
                                          end_at=end_at, \
-                                         max_cap=max_cap)
+                                         max_cap=max_cap,
+                                         url=url)
 
 @app.route('/exit') #login required
 def exit():
@@ -156,7 +169,14 @@ def home():
 
 @app.route('/intro') #shown after account creation
 def intro():
-    return render_template('intro.html')
+    return render_template('intro.html', max_cap)
+
+@app.route('/invite/<event_url>') #shown after account creation
+def invite(event_url):
+    event = Event.query.filter_by(url=event_url).one()
+    max_cap = event.max_cap
+    return render_template('invite.html', max_cap=max_cap)
+
 
 @app.route('/join', methods=['GET', 'POST'])
 def join():
