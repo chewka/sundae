@@ -19,7 +19,7 @@ Host an event!
   <h4>Create your event!</h4>
   <h6>&#x266B; let's party &#x266A; &#x266C; </h6>
   <hr>
-  <form class="create" action="/create" method="POST">
+  <form class="create" id="create" action="/create" method="POST">
     <table>
       <legend>EVENT</legend>
       <tr>
@@ -124,3 +124,21 @@ Host an event!
 
 </div> <!-- /container -->
 {% endblock %}
+
+<!-- <script type="text/javascript">
+
+$('#create').on('submit', function (evt) {
+      evt.preventDefault();
+      let url = $('#url').text();
+      $.get('/verify_url', {'url':url}, function (data) {
+          if(data == 'True') {
+            // url is unique
+            // submit form
+          }
+          else {
+            // data is not unique, alert user for another name
+          }
+        }
+});
+
+</script> -->

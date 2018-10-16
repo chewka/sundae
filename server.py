@@ -3,7 +3,6 @@ from jinja2 import StrictUndefined
 from functools import wraps
 from datetime import datetime
 from flask import Flask, render_template, redirect, request, flash, session, g
-#from flask_debugtoolbar import DebugToolbarExtension
 from flask_sqlalchemy  import SQLAlchemy
 #from werkzeug.security import generate_password_hash, check_password_hash
 from model import User, Venue, Event, Category, connect_to_db, db
@@ -56,6 +55,9 @@ def create():
         end_at = datetime.strptime(end_date + ' ' + end_time, "%Y-%m-%d %H:%M")
         max_cap = request.form.get('max_cap')
         url = request.form.get('url')
+
+        #if url is unique to the host --proceed; if not: choose another name
+
         private_html = request.form.get('private')
         if private_html == 'True':
             private = True
@@ -87,7 +89,7 @@ def create():
 
         #session['event_id'] = event.id
 
-        return redirect('/event/{}'.format(event.url)) #, event_url=event_url)
+        return redirect('/event/{}/{}'.format(event.host_id, event.url)) #, event_url=event_url)
 
     venues = Venue.query.order_by(Venue.name).all()
     #flash(venues)
@@ -123,8 +125,8 @@ def check_email():
 
     return render_template('email.html')
 
-@app.route('/event/<event_url>') #VIP-only login
-def show_event(event_url):
+@app.route('/event/<host_id>/<event_url>') #VIP-only login
+def show_event(host_id, event_url):
     event = Event.query.filter_by(url=event_url).one()
     venue = Venue.query.filter_by(id=event.venue_id).first()
     #venue = event.venue_id
@@ -257,6 +259,10 @@ def show_socials():
 @app.route('/RSVP', methods=['GET'])
 def RSVP():
     return render_template('/event.html') #, event_url=url)
+#
+# @app.route('/verify-url')
+# def verify-url():
+#
 
 @app.route('/VIP-only', methods=['POST', 'GET'])
 def VIP_only():
@@ -271,7 +277,8 @@ def VIP_only():
             session['user_id'] = user.id
             return redirect('/home')
         else:
-            return redirect('/join')
+            flash("password does not match")
+            return redirect('/VIP-only')
     return render_template('VIP-only.html', email=email)
 
 @app.errorhandler(404)
