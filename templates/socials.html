@@ -18,9 +18,20 @@ Sundae Socials
   #          <a class="dropdown-item" href="/invited">invited</a>
   #          <a class="dropdown-item" href="/confirmed">confirmed</a>-->
 <h2>Invited:</h2>
+<td>
+  <p><strong></strong></p>
+  <p></p>
+</td>
 
 <h2>Hosting:</h2>
-
+{% for host in hosting %}
+<td>
+  <p><strong>{{ host.title }}</strong></p>
+  <p>{{ host.begin_at }}</p>
+  <p>{{ host.url }}</p>
+  <hr>
+</td>
+{% endfor %}
 <h2>Attending:</h2>
 
 <h2>Interested:</h2>

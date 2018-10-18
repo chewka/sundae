@@ -146,6 +146,7 @@ def show_event(host_id, event_url):
     end_at = event.end_at
     max_cap = event.max_cap
     url = event.url
+    host_id = event.host_id
 
     #if user is host:
         #show invite button --> take to a different page
@@ -156,7 +157,10 @@ def show_event(host_id, event_url):
                                          begin_at=begin_at, \
                                          end_at=end_at, \
                                          max_cap=max_cap,
-                                         url=url)
+                                         url=url,
+                                         host_id=host_id)
+
+                                         ##BLOCKKED!!
 
 @app.route('/exit') #login required
 def exit():
@@ -173,11 +177,25 @@ def home():
 def intro():
     return render_template('intro.html', max_cap)
 
-@app.route('/invite/<event_url>') #shown after account creation
-def invite(event_url):
+@app.route('/invite/<user_id>/<event_url>') #shown after event creation
+def invite(user_id, event_url):
     event = Event.query.filter_by(url=event_url).one()
     max_cap = event.max_cap
     return render_template('invite.html', max_cap=max_cap)
+
+    if request.method == 'POST':
+        email_invites = []
+        for i in max_cap:
+            invite_email = request.form.get('email {}'.format(i))
+            email_invites.append(invite_email)
+            for email in email_invites:
+                user = User(email=email)
+                db.session.add(user)
+                db.session.commit()
+                invited = Invited(user_id=user.id, \
+                                  event_id=event.id, \
+                                  invited_at = datetime.datetime.now())
+    return render_template('home.html', email_invites=email_invites)
 
 
 @app.route('/join', methods=['GET', 'POST'])
@@ -254,7 +272,14 @@ def register_venue():
 @app.route('/socials', methods=['GET'])
 @login_required
 def show_socials():
-    return render_template('/socials.html') #, event_url=url)
+    #hosting: find the user, find where the user and the host ID are the same
+    user_id = session['user_id']
+    user = User.query.get(user_id)
+    user_id = user.id
+    #invited = Invited.query.filter_by(user_id=user_id).all()
+    hosting = Event.query.filter_by(host_id=user_id).all()
+    #hosting = hosting_all[title]
+    return render_template('/socials.html', hosting=hosting) #, event_url=url)
 
 @app.route('/RSVP', methods=['GET'])
 def RSVP():

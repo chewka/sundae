@@ -177,9 +177,8 @@ class Event(db.Model):
                     id={} \
                     private={} \
                     host_id={} \
-                    venue={} \
+                    venue_id={} \
                     title={} \
-                    info={} \
                     begin_at={} \
                     end_at={} \
                     max_cap={} \
@@ -189,9 +188,8 @@ class Event(db.Model):
                     self.id,
                     self.private,
                     self.host_id,
-                    self.venue,
+                    self.venue_id,
                     self.title,
-                    self.info,
                     self.begin_at,
                     self.end_at,
                     self.max_cap,

@@ -23,11 +23,33 @@ Enter your email
   <form class="form-login" action="/email" method="POST">
     <table>
       <tr>
+        <td> CSV &nbsp
+        </td>
+        <td>
+          <textarea name="paragraph_text" cols="50" rows="10" placeholder=" enter emails seperated by comma"></textarea>
+        </td>
+      <tr>
+        <td>
+        </td>
+        <td>
+          &nbsp<button type="submit">Let's go!</button>
+        </td>
+      </tr>
+      </tr>
+      <tr>
+        <td>
+          <hr>
+        </td>
+        <td>
+          <hr>
+        </td>
+      </tr>
+      <tr>
         <td>{% for i in range(max_cap) %}</td>
         <tr>
         <td>{{ i+1 }} &nbsp </td>
         <td>
-            <input type="email" name="email">
+            <input type="email" name="email {{ i }}" placeholder=" email">
         </td>
         {% endfor %}
         </tr>
@@ -35,7 +57,7 @@ Enter your email
       </tr>
     </table>
     <hr>
-      <button type="submit">Let's go!</button>
+        &nbsp<button type="submit">Let's go!</button>
   </form>
 </div> <!-- /container -->
 {% endblock %}
