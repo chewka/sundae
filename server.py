@@ -5,7 +5,7 @@ from datetime import datetime
 from flask import Flask, render_template, redirect, request, flash, session, g
 from flask_sqlalchemy  import SQLAlchemy
 #from werkzeug.security import generate_password_hash, check_password_hash
-from model import User, Venue, Event, Category, connect_to_db, db
+from model import User, Venue, Event, Category, connect_to_db, db, Invited
 
 app = Flask(__name__)
 app.secret_key = "ABC"
@@ -177,25 +177,44 @@ def home():
 def intro():
     return render_template('intro.html', max_cap)
 
-@app.route('/invite/<user_id>/<event_url>') #shown after event creation
-def invite(user_id, event_url):
+@app.route('/invite/<user_id>/<event_url>', methods=['GET']) #shown after event creation
+def invite_get(user_id, event_url):
     event = Event.query.filter_by(url=event_url).one()
     max_cap = event.max_cap
-    return render_template('invite.html', max_cap=max_cap)
+    return render_template('invite.html', user_id=user_id, event_url=event_url, max_cap=max_cap)
 
-    if request.method == 'POST':
-        email_invites = []
-        for i in max_cap:
-            invite_email = request.form.get('email {}'.format(i))
-            email_invites.append(invite_email)
-            for email in email_invites:
-                user = User(email=email)
-                db.session.add(user)
-                db.session.commit()
-                invited = Invited(user_id=user.id, \
-                                  event_id=event.id, \
-                                  invited_at = datetime.datetime.now())
-    return render_template('home.html', email_invites=email_invites)
+@app.route('/invite/<user_id>/<event_url>', methods=['POST']) #shown after event creation
+def invite_post(user_id, event_url):
+    event = Event.query.filter_by(url=event_url, host_id=user_id).first()
+    #email_invites = []
+    # for i in event.max_cap:
+    #     invite_email = request.form.get('email {}'.format(i))
+    #     email_invites.append(invite_email)
+    #     for email in email_invites:
+    #         user = User(email=email)
+    #         db.session.add(user)
+    #         db.session.commit()
+    #         invited = Invited(user_id=user.id, \
+    #                           event_id=event.id, \
+    #                           invited_at = datetime.datetime.now())
+
+    csv_emails = request.form.get('csv_emails')
+    invite_emails = csv_emails.replace(' ','').split(',')
+    for email in invite_emails:
+        if User.query.filter_by(email=email).first():
+            user = User.query.filter_by(email=email).first()
+            invited = Invited(user_id=user.id, \
+                              event_id=event.id, \
+                              invited_at = datetime.now())
+            db.session.add(invited)
+            db.session.commit()
+        else:
+            user = User(email=email)
+            db.session.add(user)
+            db.session.commit()
+
+
+    return redirect('/home')
 
 
 @app.route('/join', methods=['GET', 'POST'])
@@ -276,10 +295,14 @@ def show_socials():
     user_id = session['user_id']
     user = User.query.get(user_id)
     user_id = user.id
-    #invited = Invited.query.filter_by(user_id=user_id).all()
-    hosting = Event.query.filter_by(host_id=user_id).all()
-    #hosting = hosting_all[title]
-    return render_template('/socials.html', hosting=hosting) #, event_url=url)
+
+    invited = Invited.query.filter_by(user_id=user_id).all()
+
+    hosting = Event.query.filter_by(host_id=user_id).order_by(Event.begin_at).all()
+
+
+
+    return render_template('/socials.html', user_id=user_id, invited=invited, hosting=hosting) #, event_url=url)
 
 @app.route('/RSVP', methods=['GET'])
 def RSVP():

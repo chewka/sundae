@@ -17,26 +17,25 @@ Sundae Socials
   #          <a class="dropdown-item" href="/interested">interested</a>
   #          <a class="dropdown-item" href="/invited">invited</a>
   #          <a class="dropdown-item" href="/confirmed">confirmed</a>-->
-<h2>Invited:</h2>
-<td>
-  <p><strong></strong></p>
-  <p></p>
-</td>
 
 <h2>Hosting:</h2>
 {% for host in hosting %}
 <td>
-  <p><strong>{{ host.title }}</strong></p>
-  <p>{{ host.begin_at }}</p>
-  <p>{{ host.url }}</p>
+  <p><strong><a href="/event/{{ user_id }}/{{ host.url }}">{{ host.title }}</a></strong></p>
+  <p>{{ host.begin_at.strftime('%A - %B %d, %Y') }}</p>
+  <p></p>
   <hr>
 </td>
 {% endfor %}
-<h2>Attending:</h2>
 
-<h2>Interested:</h2>
-
-<h2>Confirmed:</h2>
+<h2>Invited:</h2>
+{% for invite in invited %}
+<td>
+  <p><strong><a href="/event/{{ invite.event.host_id }}/{{ invite.event.url }}">{{ invite.event.title }}</a></strong></p>
+  <p>{{ invite.event.begin_at.strftime('%A - %B %d, %Y') }}</p>
+  <p></p>
+</td>
+{% endfor %}
 
 </div>
 

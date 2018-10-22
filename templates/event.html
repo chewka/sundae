@@ -11,8 +11,9 @@
 <div class="container">
   <h1> {{ title }} </h1>
   <h2> @ {{ venue }} </h1>
-  <h5> starts @ {{ begin_at }} <h5>
-  <h5> ends @ {{ end_at }} <h5>
+  <h5> {{ begin_at.strftime('%A - %B %d, %Y') }} <h5>
+  <h5> starts @ {{ begin_at.strftime('%I:%M %p') }} <h5>
+  <h5> ends @ {{ end_at.strftime('%I:%M %p') }} <h5>
   <h5> max: {{ max_cap }} humanoids<h5>
 
 <form action="/invite/{{ host_id }}/{{ url }}" method="GET">

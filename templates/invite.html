@@ -20,13 +20,13 @@ Enter your email
   <h6>add emails</h6>
   <hr>
 
-  <form class="form-login" action="/email" method="POST">
+  <form class="form-login" action="/invite/{{ user_id }}/{{ event_url }}" method="POST">
     <table>
       <tr>
         <td> CSV &nbsp
         </td>
         <td>
-          <textarea name="paragraph_text" cols="50" rows="10" placeholder=" enter emails seperated by comma"></textarea>
+          <textarea name="csv_emails" cols="50" rows="10" placeholder=" enter emails seperated by comma"></textarea>
         </td>
       <tr>
         <td>
