@@ -11,11 +11,16 @@ Sundae Socials
 {% block content %}
 <div class="container">
 
-<h2>LOCATION:</h2>
+<h2>LOCATION: </h2>
 
-<h2>TODAY'S EVENTS:</h2> 
+<h2>TODAY'S EVENTS:</h2>
+{{ events_upcoming }}
+{% for event in events_upcoming %}
+<h5><p><strong><a href=""></a></strong></p></h5>
+<h5>{{ event.title }}</h5>
 
-<h2>UPCOMING EVENTS</h2>
+{% endfor %}
+<h2>UPCOMING EVENTS: </h2>
 
 </div>
 

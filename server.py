@@ -1,7 +1,7 @@
 """Sundae Socials: get together"""
 from jinja2 import StrictUndefined
 from functools import wraps
-from datetime import datetime
+from datetime import datetime, timedelta
 from flask import Flask, render_template, redirect, request, flash, session, g
 from flask_sqlalchemy  import SQLAlchemy
 #from werkzeug.security import generate_password_hash, check_password_hash
@@ -30,15 +30,28 @@ def already_loggedin(f):
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    today = datetime.now()
+    print(today)
+    epoch = datetime.utcfromtimestamp(0)
+    this_month = today + timedelta(days=31)
+    print(this_month)
+    events_upcoming = Event.query.filter(Event.begin_at>=today, Event.end_at<=this_month).order_by(Event.begin_at).all()
+
+    return render_template('index.html', events_upcoming=events_upcoming)
 
 @app.route('/calendar', methods=['GET'])
-#@login-required
+@login_required
 def calendar():
-    if 'user_id' in session:
-        return render_template('calendar.html')
-    else:
-        return redirect('/join')
+    today = datetime.now()
+    yesterday = today - timedelta(1)
+    show_yesterday = Event.query.filter_by(begin_at=yesterday).order_by(Event.begin_at).all()
+    tomorrow = today + timedelta(1)
+    this_week = today + timedelta(7)
+    this_month = today + timedelta(31)
+
+
+    return render_template('calendar.html')
+
 
 @app.route('/create', methods=['GET', 'POST'])
 @login_required
@@ -205,7 +218,7 @@ def invite_post(user_id, event_url):
             user = User.query.filter_by(email=email).first()
             invited = Invited(user_id=user.id, \
                               event_id=event.id, \
-                              invited_at = datetime.now())
+                              invited_at=datetime.now())
             db.session.add(invited)
             db.session.commit()
         else:
@@ -299,8 +312,6 @@ def show_socials():
     invited = Invited.query.filter_by(user_id=user_id).all()
 
     hosting = Event.query.filter_by(host_id=user_id).order_by(Event.begin_at).all()
-
-
 
     return render_template('/socials.html', user_id=user_id, invited=invited, hosting=hosting) #, event_url=url)
 
