@@ -24,7 +24,7 @@ def already_loggedin(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if session.get('user_id'):
-            return redirect('/home')
+            return redirect('/')
         return f(*args, **kwargs)
     return decorated_function
 
@@ -32,12 +32,15 @@ def already_loggedin(f):
 def index():
     today = datetime.now()
     print(today)
+    tomorrow = today + timedelta(days=1)
+    events_today = Event.query.filter(Event.begin_at>=today, Event.end_at<=tomorrow).order_by(Event.begin_at).all()
+
     epoch = datetime.utcfromtimestamp(0)
     this_month = today + timedelta(days=31)
-    print(this_month)
+    print (this_month - today)
     events_upcoming = Event.query.filter(Event.begin_at>=today, Event.end_at<=this_month).order_by(Event.begin_at).all()
 
-    return render_template('index.html', events_upcoming=events_upcoming)
+    return render_template('index.html', events_today=events_today, events_upcoming=events_upcoming)
 
 @app.route('/calendar', methods=['GET'])
 @login_required
@@ -58,7 +61,7 @@ def calendar():
 def create():
     if request.method == 'POST':
         title = request.form.get('title')
-        #info = request.form.get('info')
+        info = request.form.get('info')
 
         begin_time = request.form.get('begin_time')
         begin_date = request.form.get('begin_date')
@@ -86,7 +89,7 @@ def create():
         #Drop-down instead of storing in session
 
         event = Event(title=title, \
-                      #info=info, \
+                      info=info, \
                       begin_at=begin_at, \
                       end_at=end_at, \
                       max_cap=max_cap, \
@@ -119,7 +122,7 @@ def check_email():
         user = User.query.filter_by(email=email).first()
 
         if user and user.role == 'sundae':
-            flash("You've been here before! Let's get you set up")
+            flash("You've been here before! Let's get you set up!")
             session['user_id'] = user.id
             return redirect('/join') #, email=user.email) #sends to join
 
@@ -145,7 +148,9 @@ def show_event(host_id, event_url):
     #venue = event.venue_id
 
     #private = event.private
-    user_id = session['user_id']
+    #if event = private, then find user id if logged in;
+    #if not logged in, ask for email confirmation
+    #user_id = session['user_id']
 
     #NEXT: CREATE INVITE LIST
 
@@ -155,8 +160,12 @@ def show_event(host_id, event_url):
         #return render_template()
 
     title = event.title
-    begin_at = event.begin_at #strftime!!
+    begin_at = event.begin_at
     end_at = event.end_at
+    if event.info:
+        info == event.info
+    else:
+        info = ''
     max_cap = event.max_cap
     url = event.url
     host_id = event.host_id
@@ -165,12 +174,11 @@ def show_event(host_id, event_url):
         #show invite button --> take to a different page
 
     return render_template('event.html', title=title, \
-                                         #info=info, \
+                                         info=info, \
                                          venue=venue.name, \
                                          begin_at=begin_at, \
                                          end_at=end_at, \
-                                         max_cap=max_cap,
-                                         url=url,
+                                         url=url, \
                                          host_id=host_id)
 
                                          ##BLOCKKED!!
@@ -181,14 +189,9 @@ def exit():
     session.pop('user_id', None)
     return redirect('/')
 
-@app.route('/home') #VIP-only login
-@login_required
-def home():
-    return render_template('home.html')
-
 @app.route('/intro') #shown after account creation
 def intro():
-    return render_template('intro.html', max_cap)
+    return render_template('intro.html')
 
 @app.route('/invite/<user_id>/<event_url>', methods=['GET']) #shown after event creation
 def invite_get(user_id, event_url):
@@ -198,6 +201,8 @@ def invite_get(user_id, event_url):
 
 @app.route('/invite/<user_id>/<event_url>', methods=['POST']) #shown after event creation
 def invite_post(user_id, event_url):
+    user = User.query.get(user_id)
+    print(user.invites)
     event = Event.query.filter_by(url=event_url, host_id=user_id).first()
     #email_invites = []
     # for i in event.max_cap:
@@ -214,6 +219,9 @@ def invite_post(user_id, event_url):
     csv_emails = request.form.get('csv_emails')
     invite_emails = csv_emails.replace(' ','').split(',')
     for email in invite_emails:
+        # for item in user.invites:
+        #     if event.id != item.event_id:
+                #iterate through list: if user.invites != event.id:
         if User.query.filter_by(email=email).first():
             user = User.query.filter_by(email=email).first()
             invited = Invited(user_id=user.id, \
@@ -227,7 +235,7 @@ def invite_post(user_id, event_url):
             db.session.commit()
 
 
-    return redirect('/home')
+    return render_template('invited.html', invite_emails=invite_emails)
 
 
 @app.route('/join', methods=['GET', 'POST'])
@@ -241,9 +249,8 @@ def join():
             postal_code = request.form.get('postal_code')
             phone = request.form.get('phone')
 
-            usr_id = session['user_id']
-
-            user = User.query.get(usr_id)
+            user_id = session['user_id']
+            user = User.query.get(user_id)
 
             if User.query.filter_by(username=username).first():
                 flash("username already exists, please try again")
@@ -266,6 +273,25 @@ def join():
         return render_template('/join.html')
     return redirect('/email')
 
+@app.route('/me', methods=['GET'])
+@login_required
+def show_profile():
+    user_id = session['user_id']
+    user = User.query.get(user_id)
+
+    username = user.username
+    fname = user.fname
+    lname = user.lname
+    email = user.email
+    postal_code = user.postal_code
+    phone = user.phone
+
+    return render_template('/me', username=username,\
+                                  fname=fname, \
+                                  lname=lname, \
+                                  email=email, \
+                                  postal_code=postal_code)
+
 @app.route('/register', methods=['GET', 'POST'])
 @login_required
 def register_venue():
@@ -280,8 +306,8 @@ def register_venue():
         country = request.form.get('country')
         category = request.form.get('category')
 
-        usr_id = session['user_id']
-        user = User.query.get(usr_id)
+        user_id = session['user_id']
+        user = User.query.get(user_id)
         created_by = user.id
 
         venue = Venue(name=name, \
@@ -334,7 +360,7 @@ def VIP_only():
 
         if user.password == password and user.email == email:
             session['user_id'] = user.id
-            return redirect('/home')
+            return redirect('/')
         else:
             flash("password does not match")
             return redirect('/VIP-only')

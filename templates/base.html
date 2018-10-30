@@ -60,15 +60,10 @@
 
 <p></p>
 
-<div id="flash">
-{% for flash in get_flashed_messages() %}
-  {{ flash }}
-{% endfor %}
-</div>
-
 <p></p>
 <container>
- {% block content %}{% endblock %}
+ {% block content %}
+ {% endblock %}
 </container>
 
 </body>

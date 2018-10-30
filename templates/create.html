@@ -38,7 +38,7 @@ Host an event!
         <td>
         <select name="venue" required>
         {% for venue in venues %}
-        <option value="select" selected disabled hidden>Select</option>
+        <option value="select" selected disabled hidden required>Select</option>
         <option value="{{ venue.name }}">{{ venue.name }}</option>
         {% endfor %}
         </td>
@@ -95,15 +95,15 @@ Host an event!
         <td><hr></td>
       </tr>
 	    <tr>
-		    <td>max cap</td>
+		    <td>max </td>
 		    <td>
-          <input type="textbox" name="max_cap" required>
+          <input type="textbox" name="max_cap">
         </td>
 	    </tr>
       <tr>
         <td>custom url </td>
         <td>
-          <input type="textbox" name="url">
+          <input type="textbox" name="url" required>
         </td>
       </tr>
       <tr>

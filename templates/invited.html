@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Enter your email
+{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="static/form.css">
+{% endblock %}
+
+<div id="flash">
+{% for flash in get_flashed_messages() %}
+  {{ flash }}
+{% endfor %}
+</div>
+
+{% block content %}
+<div class="container">
+  <h4>Emails Invited</h4>
+  <hr>
+    <table>
+      <tr>
+        <td>
+        </td>
+        <td>
+        </td>
+      <tr>
+        <td>
+          {% for email in invite_emails %}
+          <p>{{ email }}</p>
+          {% endfor %}
+        </td>
+      </tr>
+
+</div> <!-- /container -->
+{% endblock %}

@@ -5,3 +5,13 @@ input:invalid {
 input:valid {
   border: 2px solid black;
 }
+
+#location {
+  border: 10px solid lightgrey;
+  background-color: lightgrey;
+  color: white;
+}
+
+.events {
+  border: 10px solid white;
+}
