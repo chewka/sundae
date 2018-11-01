@@ -6,6 +6,33 @@ Host an event!
 
 {% block styles %}
 <link rel="stylesheet" href="static/form.css">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+{% endblock %}
+
+{% block scripts %}
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+<script>
+$( function() {
+  $( '.datepicker').datepicker();
+      format: "yyyy-mm-dd"
+} );
+
+$('.timepicker').timepicker({
+    timeFormat: 'hh:mm p',
+    interval: 30,
+    dropdown: true,
+    scrollbar: true
+});
+
+$(function() {
+				$('#begin_at').timepicker();
+        $('#end_at').timepicker();
+			});
+
+</script>
 {% endblock %}
 
 <div id="flash">
@@ -55,7 +82,7 @@ Host an event!
       <tr>
         <td>info</td>
         <td>
-          <input type="textbox" name="info">
+          <textarea name="info" cols="20" rows="10" placeholder="500 char max"></textarea>
         </td>
       </tr>
       <tr>
@@ -65,13 +92,13 @@ Host an event!
       <tr>
         <td>begins at</td>
         <td>
-          <input type="date" name="begin_date" required>
+          <input type="text" name="begin_date" class="datepicker" required>
         </td>
       </tr>
       <tr>
         <td></td>
         <td>
-          <input type="time" name="begin_time" required>
+          <input type="text" name="begin_time" class="timepicker" id="begin_at" required>
         </td>
       </tr>
       <tr>
@@ -81,13 +108,13 @@ Host an event!
       <tr>
         <td>ends at</td>
         <td>
-          <input type="date" name="end_date" required>
+          <input type="text" name="end_date" class="datepicker" required>
         </td>
       </tr>
       <tr>
         <td></td>
         <td>
-          <input type="time" name="end_time" required>
+          <input type="text" name="end_time"  id="end_at" required>
         </td>
       </tr>
       <tr>

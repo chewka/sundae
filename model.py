@@ -40,10 +40,6 @@ class User(db.Model):
     role = db.Column(db.String(15), default='sundae', nullable=False) #permissions: admin, host, user
     authorized = db.Column(db.Boolean, default=True, nullable=False) #security: protect against blocked users
 
-    # @classmethod
-    # def check_user(cls, prop):
-    #     return cls.query.filter_by(email=prop).first()
-
     def __repr__(self):
         repr_str = '<User: \
                     id={} \
@@ -169,7 +165,7 @@ class Event(db.Model):
     info = db.Column(db.String(500), nullable=True)
     begin_at = db.Column(db.DateTime, nullable=False, index=True) # YYYY-MM-DD HH:MI:SS
     end_at = db.Column(db.DateTime, nullable=False) # YYYY-MM-DD HH:MI:SS
-    max_cap = db.Column(db.Integer, nullable=True)
+    max_cap = db.Column(db.Integer, default=1, nullable=True)
     url = db.Column(db.String(100), unique=True, nullable=False, index=True)
 
     def __repr__(self):

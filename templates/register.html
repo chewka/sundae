@@ -14,8 +14,29 @@ Host an event!
 {% endfor %}
 </div>
 
+{% block scripts %}
+<script>
+$(document).ready(function() {
+    $('form').on('submit', function(event) {
+      event.preventDefault();
+        $.post('/register', {
+          name : $('#nameInput').val()
+          }, function(data) {
+            if (data.error) {
+                $('#message').text(data.error).show();
+            }
+        });
+
+
+    });
+});
+
+</script>
+{% endblock %}
+
 {% block content %}
 <div class="container">
+  <div id="message"></div>
   <h4>Register your venue</h4>
   <h6>&#9758; get on the map | <a href="/create">skip, create event</a></h6>
   <hr>
@@ -26,7 +47,7 @@ Host an event!
       <tr>
         <td>name</td>
         <td>
-          <input type="textbox" name="name" required>
+          <input type="textbox" name="name" id='nameInput' required>
         </td>
       </tr>
       <tr>

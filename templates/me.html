@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block styles %}
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+  <h1>username: {{ username }} </h1>
+  <h2>name: {{ fname }} {{ lname }} </h1>
+  <h5>email: {{ email }} <h5>
+  <p>postal:  {{ postal_code }} <p>
+
+<form action="/join" method="GET">
+  <button type="submit">update profile</button>
+  <!-- <input value={{max_cap}} hidden></input>
+  <input type="submit" value={{ max_cap }} name="max_cap"></input> -->
+</form>
+</div>
+{% endblock %}

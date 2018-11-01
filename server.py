@@ -2,7 +2,7 @@
 from jinja2 import StrictUndefined
 from functools import wraps
 from datetime import datetime, timedelta
-from flask import Flask, render_template, redirect, request, flash, session, g
+from flask import Flask, render_template, redirect, request, flash, session, g, jsonify
 from flask_sqlalchemy  import SQLAlchemy
 #from werkzeug.security import generate_password_hash, check_password_hash
 from model import User, Venue, Event, Category, connect_to_db, db, Invited
@@ -42,19 +42,6 @@ def index():
 
     return render_template('index.html', events_today=events_today, events_upcoming=events_upcoming)
 
-@app.route('/calendar', methods=['GET'])
-@login_required
-def calendar():
-    today = datetime.now()
-    yesterday = today - timedelta(1)
-    show_yesterday = Event.query.filter_by(begin_at=yesterday).order_by(Event.begin_at).all()
-    tomorrow = today + timedelta(1)
-    this_week = today + timedelta(7)
-    this_month = today + timedelta(31)
-
-
-    return render_template('calendar.html')
-
 
 @app.route('/create', methods=['GET', 'POST'])
 @login_required
@@ -65,10 +52,10 @@ def create():
 
         begin_time = request.form.get('begin_time')
         begin_date = request.form.get('begin_date')
-        begin_at = datetime.strptime(begin_date + ' ' + begin_time, "%Y-%m-%d %H:%M")
+        begin_at = datetime.strptime(begin_date + ' ' + begin_time, "%m/%d/%Y %I:%M %p")
         end_time = request.form.get('end_time')
         end_date = request.form.get('end_date')
-        end_at = datetime.strptime(end_date + ' ' + end_time, "%Y-%m-%d %H:%M")
+        end_at = datetime.strptime(end_date + ' ' + end_time, "%m/%d/%Y %I:%M %p")
         max_cap = request.form.get('max_cap')
         url = request.form.get('url')
 
@@ -122,7 +109,7 @@ def check_email():
         user = User.query.filter_by(email=email).first()
 
         if user and user.role == 'sundae':
-            flash("You've been here before! Let's get you set up!")
+            flash("User account created! Add more info!")
             session['user_id'] = user.id
             return redirect('/join') #, email=user.email) #sends to join
 
@@ -163,7 +150,7 @@ def show_event(host_id, event_url):
     begin_at = event.begin_at
     end_at = event.end_at
     if event.info:
-        info == event.info
+        info = event.info
     else:
         info = ''
     max_cap = event.max_cap
@@ -219,19 +206,26 @@ def invite_post(user_id, event_url):
     csv_emails = request.form.get('csv_emails')
     invite_emails = csv_emails.replace(' ','').split(',')
     for email in invite_emails:
+        user = User.query.filter_by(email=email).first()
         # for item in user.invites:
         #     if event.id != item.event_id:
                 #iterate through list: if user.invites != event.id:
-        if User.query.filter_by(email=email).first():
-            user = User.query.filter_by(email=email).first()
+                #invited filter by user id and event id;
+        if User.query.filter_by(role='sundae').first():
             invited = Invited(user_id=user.id, \
                               event_id=event.id, \
                               invited_at=datetime.now())
             db.session.add(invited)
             db.session.commit()
-        else:
+        elif not User.query.filter_by(email=email).first():
             user = User(email=email)
             db.session.add(user)
+            db.session.commit()
+        else:
+            invited = Invited(user_id=user.id, \
+                              event_id=event.id, \
+                              invited_at=datetime.now())
+            db.session.add(invited)
             db.session.commit()
 
 
@@ -286,46 +280,53 @@ def show_profile():
     postal_code = user.postal_code
     phone = user.phone
 
-    return render_template('/me', username=username,\
+    return render_template('/me.html', username=username,\
                                   fname=fname, \
                                   lname=lname, \
                                   email=email, \
                                   postal_code=postal_code)
 
-@app.route('/register', methods=['GET', 'POST'])
+@app.route('/register', methods=['GET'])
+@login_required
+def show_register_venue():
+    return render_template('/register.html')
+
+@app.route('/register', methods=['POST'])
 @login_required
 def register_venue():
 
-    if request.method == 'POST':
-        name = request.form.get('name')
-        addr_1 = request.form.get('addr_1')
-        addr_2 = request.form.get('addr_2')
-        city = request.form.get('city')
-        postal_code = request.form.get('postal_code')
-        state = request.form.get('state')
-        country = request.form.get('country')
-        category = request.form.get('category')
+    name = request.form.get('name')
+    addr_1 = request.form.get('addr_1')
+    addr_2 = request.form.get('addr_2')
+    city = request.form.get('city')
+    postal_code = request.form.get('postal_code')
+    state = request.form.get('state')
+    country = request.form.get('country')
+    category = request.form.get('category')
 
-        user_id = session['user_id']
-        user = User.query.get(user_id)
-        created_by = user.id
+    if Venue.query.filter_by(name=name).first():
+        return jsonify({'error' : 'duplicate name'})
 
-        venue = Venue(name=name, \
-                      addr_1=addr_1, \
-                      addr_2=addr_2, \
-                      city=city, \
-                      postal_code=postal_code, \
-                      state=state, \
-                      country=country, \
-                      created_by=created_by)
+    user_id = session['user_id']
+    user = User.query.get(user_id)
+    created_by = user.id
 
-        db.session.add(venue)
-        db.session.commit()
+    venue = Venue(name=name, \
+                  addr_1=addr_1, \
+                  addr_2=addr_2, \
+                  city=city, \
+                  postal_code=postal_code, \
+                  state=state, \
+                  country=country, \
+                  created_by=created_by)
 
-        session['venue_id'] = venue.id
+    db.session.add(venue)
+    db.session.commit()
 
-        return redirect('/create')
-    return render_template('/register.html')
+    session['venue_id'] = venue.id
+
+    return redirect('/create')
+
 
 @app.route('/socials', methods=['GET'])
 @login_required

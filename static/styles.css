@@ -15,3 +15,7 @@ input:valid {
 .events {
   border: 10px solid white;
 }
+
+.datepicker {
+  background-color: white;
+}
