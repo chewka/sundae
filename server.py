@@ -204,30 +204,24 @@ def invite_post(user_id, event_url):
     #                           invited_at = datetime.datetime.now())
 
     csv_emails = request.form.get('csv_emails')
-    invite_emails = csv_emails.replace(' ','').split(',')
+    invite_emails = csv_emails.replace(' ','').rstrip().split(',')
     for email in invite_emails:
         user = User.query.filter_by(email=email).first()
         # for item in user.invites:
         #     if event.id != item.event_id:
                 #iterate through list: if user.invites != event.id:
                 #invited filter by user id and event id;
-        if User.query.filter_by(role='sundae').first():
-            invited = Invited(user_id=user.id, \
-                              event_id=event.id, \
-                              invited_at=datetime.now())
-            db.session.add(invited)
-            db.session.commit()
-        elif not User.query.filter_by(email=email).first():
+
+        if user is None:
             user = User(email=email)
             db.session.add(user)
             db.session.commit()
-        else:
-            invited = Invited(user_id=user.id, \
-                              event_id=event.id, \
-                              invited_at=datetime.now())
-            db.session.add(invited)
-            db.session.commit()
 
+        invited = Invited(user_id=user.id, \
+                          event_id=event.id, \
+                          invited_at=datetime.now())
+        db.session.add(invited)
+        db.session.commit()
 
     return render_template('invited.html', invite_emails=invite_emails)
 

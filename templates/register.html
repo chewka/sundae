@@ -20,14 +20,14 @@ $(document).ready(function() {
     $('form').on('submit', function(event) {
       event.preventDefault();
         $.post('/register', {
-          name : $('#nameInput').val()
+          name : $('#nameInput').val(),
+          postal_code : $('#postalCode').val()
           }, function(data) {
             if (data.error) {
                 $('#message').text(data.error).show();
             }
+            console.log(data)
         });
-
-
     });
 });
 
@@ -140,7 +140,7 @@ $(document).ready(function() {
 	    <tr>
 		    <td>postal code</td>
 		    <td>
-          <input type="textbox" name="postal_code" required>
+          <input type="textbox" name="postal_code" id='postalCode' required>
         </td>
 	    </tr>
       <tr>
