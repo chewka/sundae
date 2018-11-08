@@ -1,9 +1,10 @@
-input:invalid {
-  border: 2px dashed red;
+
+h1, h2 {
+  font-family: 'Lobster', cursive;
 }
 
-input:valid {
-  border: 2px solid black;
+p {
+  font-family: 'Quicksand', sans-serif;
 }
 
 #location {
@@ -12,10 +13,37 @@ input:valid {
   color: white;
 }
 
-.events {
+#upcoming {
   border: 10px solid white;
+}
+
+.events {
+  border: 20px 10px solid white;
 }
 
 .datepicker {
   background-color: white;
+}
+
+
+html,
+body {
+  height: 100%;
+}
+
+.centered-container {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.event-display {
+  width: 300px;
+  height: 300px;
+  outline-style: solid;
+  outline-offset: 40px;
+  outline-width: 20px;
+  margin-top: 50px;
+  border: 10px solid red;
 }

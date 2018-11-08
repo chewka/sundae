@@ -31,17 +31,22 @@ def already_loggedin(f):
 @app.route('/')
 def index():
     today = datetime.now()
-    print(today)
+    #print(today)
+    today = today - timedelta(days=1)
     tomorrow = today + timedelta(days=1)
-    events_today = Event.query.filter(Event.begin_at>=today, Event.end_at<=tomorrow).order_by(Event.begin_at).all()
+    events_today = Event.query.filter(Event.begin_at>=today, Event.end_at<=tomorrow, Event.private==False).order_by(Event.begin_at).all()
 
-    epoch = datetime.utcfromtimestamp(0)
     this_month = today + timedelta(days=31)
-    print (this_month - today)
+    #print (this_month - today)
     events_upcoming = Event.query.filter(Event.begin_at>=today, Event.end_at<=this_month).order_by(Event.begin_at).all()
 
     return render_template('index.html', events_today=events_today, events_upcoming=events_upcoming)
 
+
+@app.route('/categories_subcategories', methods=['GET'])
+def get_subcategories():
+    venues = Venue.query.filter_by(Venue.country=='United States').all()
+    return jsonify(venues)
 
 @app.route('/create', methods=['GET', 'POST'])
 @login_required
@@ -57,6 +62,8 @@ def create():
         end_date = request.form.get('end_date')
         end_at = datetime.strptime(end_date + ' ' + end_time, "%m/%d/%Y %I:%M %p")
         max_cap = request.form.get('max_cap')
+        if max_cap == '':
+            max_cap = 1
         url = request.form.get('url')
 
         #if url is unique to the host --proceed; if not: choose another name
@@ -162,7 +169,7 @@ def show_event(host_id, event_url):
 
     return render_template('event.html', title=title, \
                                          info=info, \
-                                         venue=venue.name, \
+                                         venue=venue, \
                                          begin_at=begin_at, \
                                          end_at=end_at, \
                                          url=url, \
@@ -339,10 +346,11 @@ def show_socials():
 @app.route('/RSVP', methods=['GET'])
 def RSVP():
     return render_template('/event.html') #, event_url=url)
-#
-# @app.route('/verify-url')
-# def verify-url():
-#
+
+@app.route('/venues', methods=['GET'])
+def venues():
+    venues = Venue.query.filter_by(country='United States')
+    return render_template('/venues.html', venues=venues)
 
 @app.route('/VIP-only', methods=['POST', 'GET'])
 def VIP_only():

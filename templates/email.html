@@ -10,26 +10,35 @@ Enter your email
 
 {% block content %}
 <div class="container">
+  <div class="purple-square-container">
 
   <h4>Let's get started!</h4>
   <h6>We only need your email to begin</h6>
   <hr>
-
+  <div class="eventDisplay">
   <form class="form-login" action="/email" method="POST">
     <table>
       <tr>
         <td>email address &nbsp </td>
         <td>
+        <div class="mdl-textfield mdl-js-textfield">
           {% if "user_id" in session %}
-            <input type="email" name="email" value="{{ email }}" required>
+            <input class="mdl-textfield__input" type="text" name="email" id="email" value="{{ email }}" required>
+            <label class="mdl-textfield__label" for="email">Email</label>
+            <span class="mdl-textfield__error">Email</span>
           {% else %}
-            <input type="email" name="email" required>
+            <input class="mdl-textfield__input" type="text" id="email" name="email" required>
+            <label class="mdl-textfield__label" for="email">Email</label>
+            <span class="mdl-textfield__error">Email</span>
           {% endif %}
+        </div>
         </td>
       </tr>
     </table>
     <hr>
       <button type="submit">Let's go!</button>
   </form>
+</div>
+</div>
 </div> <!-- /container -->
 {% endblock %}

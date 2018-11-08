@@ -9,17 +9,21 @@
 
 {% block content %}
 <div class="container">
-  <h1> {{ title }} </h1>
-  <h2> @ {{ venue }} </h1>
-  <h5> {{ begin_at.strftime('%A - %B %d, %Y') }} <h5>
-  <h5> starts @ {{ begin_at.strftime('%I:%M %p') }} <h5>
-  <h5> ends @ {{ end_at.strftime('%I:%M %p') }} <h5>
-  <p>  {{ info }} <p>
+  <div class="centered-container">
+  <div class="event-display">
+    <h1> {{ title }} </h1>
+    <h2> @ {{ venue.name }} </h1>
+    <h5> {{ begin_at.strftime('%A - %B %d, %Y') }} <h5>
+    <h5> starts @ {{ begin_at.strftime('%I:%M %p') }} <h5>
+    <h5> ends @ {{ end_at.strftime('%I:%M %p') }} <h5>
+    <p>  {{ info }} <p>
+    <form action="/invite/{{ host_id }}/{{ url }}" method="GET">
+    <button type="submit">invite friends</button>
+  </div>
 
-<form action="/invite/{{ host_id }}/{{ url }}" method="GET">
-  <button type="submit">invite friends</button>
   <!-- <input value={{max_cap}} hidden></input>
   <input type="submit" value={{ max_cap }} name="max_cap"></input> -->
 </form>
+</div>
 </div>
 {% endblock %}

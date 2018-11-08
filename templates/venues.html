@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Sundae Socials
+{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="static/styles.css">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div id="location">
+    <p> </p>
+    <h2>LOCATION: {{ postal_code }}</h2>
+    <p> </p>
+  </div>
+
+  <div class="venues">
+    <h2>TODAY'S EVENTS: </h2>
+    {% for item in events_today %}
+    <h5><a href="/event/{{ item.host_id }}/{{ item.url }}">{{ item.title }}</a></h5>
+    <strong>{{ item.begin_at.strftime('%A | %B %d, %Y') }}</strong>
+    {% endfor %}
+  </div>
+
+  <div class="events">
+    <h2>UPCOMING EVENTS:</h2>
+    {% for event in events_upcoming %}
+    <h5><a href="/event/{{ event.host_id }}/{{ event.url }}">{{ event.title }}</a></h5>
+    <strong>{{ event.begin_at.strftime('%A | %B %d, %Y') }}</strong>
+    {% endfor %}
+  </div>
+
+</div>
+
+{% endblock %}

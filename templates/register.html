@@ -16,17 +16,38 @@ Host an event!
 
 {% block scripts %}
 <script>
+"use strict";
+
+ function getSubcategory(evt){
+            let url = '/categories_subcategories.json';
+            $.get(url, categorySubcategory);
+          }
+
+        function categorySubcategory(result){
+            $('span#climate').html(result['climate']);
+        }
+
+
+$('#getInfo').on('click', getPlanet);
+
+
 $(document).ready(function() {
     $('form').on('submit', function(event) {
       event.preventDefault();
         $.post('/register', {
-          name : $('#nameInput').val(),
-          postal_code : $('#postalCode').val()
+          name : $('#venueName').val(),
+          addr_1 : $('#venueAddr1').val(),
+          addr_2 : $('#venueAddr2').val(),
+          city : $('#venueCity').val(),
+          postal_code : $('#venuePostalCode').val(),
+          state : $('#venueState').val(),
+          country : $('#venueCountry').val(),
+          category : $('#venueCategory').val()
           }, function(data) {
             if (data.error) {
                 $('#message').text(data.error).show();
             }
-            console.log(data)
+            window.location='/create'
         });
     });
 });
@@ -47,19 +68,19 @@ $(document).ready(function() {
       <tr>
         <td>name</td>
         <td>
-          <input type="textbox" name="name" id='nameInput' required>
+          <input type="textbox" name="name" id='venueName' required>
         </td>
       </tr>
       <tr>
         <td>address</td>
         <td>
-          <input type="textbox" name="addr_1">
+          <input type="textbox" name="addr_1" id='venueAddr1'>
         </td>
       </tr>
       <tr>
         <td></td>
         <td>
-          <input type="textbox" name="addr_2">
+          <input type="textbox" name="addr_2" id='venueAddr2'>
         </td>
       </tr>
       <tr>
@@ -69,13 +90,13 @@ $(document).ready(function() {
       <tr>
         <td>city</td>
         <td>
-          <input type="textbox" name="city">
+          <input type="textbox" name="city" id="venueCity">
         </td>
       </tr>
       <tr>
         <td>state</td>
         <td>
-            <select name="state">
+            <select name="state" id="venueState">
               <option value="select" selected disabled hidden>State</option>
               <option value="CA">California</option>
               <option value="--">---</option>
@@ -140,13 +161,13 @@ $(document).ready(function() {
 	    <tr>
 		    <td>postal code</td>
 		    <td>
-          <input type="textbox" name="postal_code" id='postalCode' required>
+          <input type="textbox" name="postal_code" id="venuePostalCode" required>
         </td>
 	    </tr>
       <tr>
         <td>country</td>
         <td>
-          <input type="textbox" name="country" value="United States">
+          <input type="textbox" name="country" value="United States" id="venueCountry">
         </td>
       </tr>
       <tr>
