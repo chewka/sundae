@@ -10,33 +10,72 @@ Sundae Socials
 
 {% block content %}
 <div class="container">
+<body class="mdl-demo mdl-color--grey-100 mdl-color-text--grey-700 mdl-base">
+  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <header class="mdl-layout__header mdl-layout__header--scroll mdl-color--primary">
+      <div class="mdl-layout--large-screen-only mdl-layout__header-row">
+      </div>
+      <div class="mdl-layout--large-screen-only mdl-layout__header-row">
+        <h3>🍨 sundae socials</h3>
+      </div>
+      <div class="mdl-layout--large-screen-only mdl-layout__header-row">
+      </div>
+      <div class="mdl-layout__tab-bar mdl-js-ripple-effect mdl-color--primary-dark">
+        <a href="/" class="mdl-layout__tab">🏠 home</a>
+        <a href="/create" class="mdl-layout__tab">✍️ create</a>
+        <a href="/socials" class="mdl-layout__tab is-active">👥 socials</a>
+        <a href="/venues" class="mdl-layout__tab">🌐 venues</a>
+        <a href="/me" class="mdl-layout__tab">👤 me</a>
+        {% if 'user_id' in session %}
+        <a href="/exit" class="mdl-layout__tab">👋 exit</a>
+        {% else %}
+        <a href="/join" class="mdl-layout__tab">🕶️ VIP</a>
+        {% endif %}
+        <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-shadow--4dp mdl-color--accent" id="add" onclick="window.location='/create';">
+          <i class="material-icons" role="presentation">add</i>
+          <span class="visuallyhidden">Add</span>
+        </button>
+      </div>
+    </header>
+    <main class="mdl-layout__content">
+      <div class="mdl-layout__tab-panel is-active" id="overview">
+    </header>
 
 
-  <!---<a class="dropdown-item" href="/hosting">hosting</a>
-  #          <a class="dropdown-item" href="/attending">attending</a>
-  #          <a class="dropdown-item" href="/interested">interested</a>
-  #          <a class="dropdown-item" href="/invited">invited</a>
-  #          <a class="dropdown-item" href="/confirmed">confirmed</a>-->
+<section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+  <div class="mdl-card mdl-cell mdl-cell--12-col">
+    <div class="mdl-card__supporting-text mdl-grid mdl-grid--no-spacing">
+      <h4 class="mdl-cell mdl-cell--12-col">hosting</h4>
+      {% for host in hosting %}
+      <div class="section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
+        <div class="section__circle-container__circle mdl-color--white"></div>
+      </div>
+      <div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
+          <p><strong>{{ host.begin_at.strftime('%A | %B %d, %Y') }}</strong></p>
+          <h5><a href="/event/{{ user_id }}/{{ host.url }}">{{ host.title }}</a></h5>
+          <p>{{ host.info }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
 
-<h2>Hosting:</h2>
-{% for host in hosting %}
-<td>
-  <p><strong><a href="/event/{{ user_id }}/{{ host.url }}">{{ host.title }}</a></strong></p>
-  <p>{{ host.begin_at.strftime('%A - %B %d, %Y') }}</p>
-  <p></p>
-  <hr>
-</td>
-{% endfor %}
-
-<h2>Invited:</h2>
-{% for invite in invited %}
-<td>
-  <p><strong><a href="/event/{{ invite.event.host_id }}/{{ invite.event.url }}">{{ invite.event.title }}</a></strong></p>
-  <p>{{ invite.event.begin_at.strftime('%A - %B %d, %Y') }}</p>
-  <p></p>
-</td>
-{% endfor %}
-
-</div>
-
+<section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+  <div class="mdl-card mdl-cell mdl-cell--12-col">
+    <div class="mdl-card__supporting-text mdl-grid mdl-grid--no-spacing">
+      <h4 class="mdl-cell mdl-cell--12-col">invited</h4>
+      {% for invite in invited %}
+      <div class="section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
+        <div class="section__circle-container__circle mdl-color--white"></div>
+      </div>
+      <div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
+          <p><strong>{{ invite.event.begin_at.strftime('%A | %B %d, %Y') }}</strong></p>
+          <h5><a href="/event/{{ invite.event.host_id }}/{{ invite.event.url }}">{{ invite.event.title }} </a></h5>
+          <p>{{ invite.event.info }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
 {% endblock %}
+</div>

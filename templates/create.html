@@ -4,6 +4,40 @@
 Host an event!
 {% endblock %}
 
+</head>
+
+  <body class="mdl-demo mdl-color--grey-100 mdl-color-text--grey-700 mdl-base">
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+      <header class="mdl-layout__header mdl-layout__header--scroll mdl-color--primary">
+        <div class="mdl-layout--large-screen-only mdl-layout__header-row">
+        </div>
+        <div class="mdl-layout--large-screen-only mdl-layout__header-row">
+          <h3>🍨 sundae socials</h3>
+        </div>
+        <div class="mdl-layout--large-screen-only mdl-layout__header-row">
+        </div>
+        <div class="mdl-layout__tab-bar mdl-js-ripple-effect mdl-color--primary-dark">
+          <a href="/" class="mdl-layout__tab">🏠 home</a>
+          <a href="/create" class="mdl-layout__tab is-active">✍️ create</a>
+          <a href="/socials" class="mdl-layout__tab">👥 socials</a>
+          <a href="/venues" class="mdl-layout__tab">venues</a>
+          <a href="/me" class="mdl-layout__tab">👤 me</a>
+          {% if 'user_id' in session %}
+          <a href="/exit" class="mdl-layout__tab">👣 exit</a>
+          {% else %}
+          <a href="/join" class="mdl-layout__tab">🕶️ VIP</a>
+          {% endif %}
+          <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-shadow--4dp mdl-color--accent" id="add" onclick="window.location='/create';">
+            <i class="material-icons" role="presentation">add</i>
+            <span class="visuallyhidden">Add</span>
+          </button>
+        </div>
+      </header>
+      <main class="mdl-layout__content">
+        <div class="mdl-layout__tab-panel is-active" id="overview">
+            </header>
+
+
 {% block styles %}
 <link rel="stylesheet" href="static/form.css">
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -42,7 +76,42 @@ $(function() {
 </div>
 
 {% block content %}
+<body class="mdl-demo mdl-color--grey-100 mdl-color-text--grey-700 mdl-base">
+  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <header class="mdl-layout__header mdl-layout__header--scroll mdl-color--primary">
+      <div class="mdl-layout--large-screen-only mdl-layout__header-row">
+      </div>
+      <div class="mdl-layout--large-screen-only mdl-layout__header-row">
+        <h3>🍨 sundae socials</h3>
+      </div>
+      <div class="mdl-layout--large-screen-only mdl-layout__header-row">
+      </div>
+      <div class="mdl-layout__tab-bar mdl-js-ripple-effect mdl-color--primary-dark">
+        <a href="/" class="mdl-layout__tab">🏠 home</a>
+        <a href="/create" class="mdl-layout__tab is-active">✍️ create</a>
+        <a href="/socials" class="mdl-layout__tab">👥 socials</a>
+        <a href="/venues" class="mdl-layout__tab">🌐 venues</a>
+        <a href="/me" class="mdl-layout__tab">👤 me</a>
+        {% if 'user_id' in session %}
+        <a href="/exit" class="mdl-layout__tab">👋 exit</a>
+        {% else %}
+        <a href="/join" class="mdl-layout__tab">🕶️ VIP</a>
+        {% endif %}
+        <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-shadow--4dp mdl-color--accent" id="add" onclick="window.location='/create';">
+          <i class="material-icons" role="presentation">add</i>
+          <span class="visuallyhidden">Add</span>
+        </button>
+      </div>
+    </header>
+    <main class="mdl-layout__content">
+      <div class="mdl-layout__tab-panel is-active" id="overview">
+    </header>
+
 <div class="container">
+
+<section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+<div class="mdl-card mdl-cell mdl-cell--12-col">
+  <div class="mdl-card__supporting-text">
   <h4>Create your event!</h4>
   <h6>&#x266B; let's party &#x266A; &#x266C; </h6>
   <hr>
@@ -143,13 +212,13 @@ $(function() {
         <td>
         </td>
         <td>
-          <button type="submit">get social</button>
+          <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type="submit">get social</button>
         </td>
       </tr>
     </table>
   </form>
-
-</div> <!-- /container -->
+</div>
+</main> <!-- /container -->
 {% endblock %}
 
 <!-- <script type="text/javascript">

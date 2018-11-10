@@ -162,7 +162,7 @@ class Event(db.Model):
     host_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     venue_id = db.Column(db.Integer, db.ForeignKey('venues.id')) # Form prompts adding venue or searching for venue before creating event
     title = db.Column(db.String(100), nullable=False)
-    info = db.Column(db.String(500), nullable=True)
+    info = db.Column(db.String(500), default=' ', nullable=True)
     begin_at = db.Column(db.DateTime, nullable=False, index=True) # YYYY-MM-DD HH:MI:SS
     end_at = db.Column(db.DateTime, nullable=False) # YYYY-MM-DD HH:MI:SS
     max_cap = db.Column(db.Integer, default=1, nullable=True)

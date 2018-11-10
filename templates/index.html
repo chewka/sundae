@@ -5,36 +5,120 @@ Sundae Socials
 {% endblock %}
 
 {% block styles %}
-<link rel="stylesheet" href="static/styles.css">
+  <style>
+  .demo-card-event.mdl-card {
+    width: 256px;
+    height: 256px;
+    background: #3E4EB8;
+  }
+  .demo-card-event > .mdl-card__actions {
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+  .demo-card-event > .mdl-card__title {
+    align-items: flex-start;
+  }
+  .demo-card-event > .mdl-card__title > h4 {
+    margin-top: 0;
+  }
+  .demo-card-event > .mdl-card__actions {
+    display: flex;
+    box-sizing:border-box;
+    align-items: center;
+  }
+  .demo-card-event > .mdl-card__actions > .material-icons {
+    padding-right: 10px;
+  }
+  .demo-card-event > .mdl-card__title,
+  .demo-card-event > .mdl-card__actions,
+  .demo-card-event > .mdl-card__actions > .mdl-button {
+    color: #fff;
+  }
+
+
+  .event-index {
+    width: 300px;
+    height: 300px;
+    margin-top: 50px;
+  }
+
+  .title {
+    font-size: 30px;
+  }
+
+  .date {
+    font-size: 16px;
+    text-align: right;
+  }
+
+
+  </style>
 {% endblock %}
 
 {% block content %}
-<div class="container">
-  <div id="location">
-    <p> </p>
-    <h2>LOCATION: San Francisco Bay Area</h2>
-    <p> </p>
-  </div>
-
-  <div class="events">
-    <h2>TODAY'S EVENTS: </h2>
-    {% for item in events_today %}
-    <div id="upcoming">
-      <h5><a href="/event/{{ item.host_id }}/{{ item.url }}">{{ item.title }}</a></h5>
-      <strong>{{ item.begin_at.strftime('%A | %B %d, %Y') }}</strong>
-    </div>
-    {% endfor %}
-  </div>
-
-  <div class="events">
-    <h2>UPCOMING EVENTS:</h2>
-    {% for event in events_upcoming %}
-      <div id="upcoming">
-        <h5>&#9758; <a href="/event/{{ event.host_id }}/{{ event.url }}">{{ event.title }}</a></h5>
-        <strong>{{ event.begin_at.strftime('%A | %B %d, %Y') }}</strong>
+<body class="mdl-demo mdl-color--grey-100 mdl-color-text--grey-700 mdl-base">
+  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <header class="mdl-layout__header mdl-layout__header--scroll mdl-color--primary">
+      <div class="mdl-layout--large-screen-only mdl-layout__header-row">
       </div>
-      {% endfor %}
+      <div class="mdl-layout--large-screen-only mdl-layout__header-row">
+        <h3>🍨 sundae socials</h3>
+      </div>
+      <div class="mdl-layout--large-screen-only mdl-layout__header-row">
+      </div>
+      <div class="mdl-layout__tab-bar mdl-js-ripple-effect mdl-color--primary-dark">
+        <a href="/" class="mdl-layout__tab is-active">🏠 home</a>
+        <a href="/create" class="mdl-layout__tab">✍️ create</a>
+        <a href="/socials" class="mdl-layout__tab">👥 socials</a>
+        <a href="/venues" class="mdl-layout__tab">🌐venues</a>
+        <a href="/me" class="mdl-layout__tab">👤 me</a>
+        {% if 'user_id' in session %}
+        <a href="/exit" class="mdl-layout__tab">👋 exit</a>
+        {% else %}
+        <a href="/join" class="mdl-layout__tab">🕶️ VIP</a>
+        {% endif %}
+        <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-shadow--4dp mdl-color--accent" id="add" onclick="window.location='/create';">
+          <i class="material-icons" role="presentation">add</i>
+          <span class="visuallyhidden">Add</span>
+        </button>
+      </div>
+    </header>
+    <main class="mdl-layout__content">
+      <div class="mdl-layout__tab-panel is-active" id="overview">
+    </header>
+
+
+  {% for event in events_upcoming %}
+  <div class="grid-container">
+    <div class="centered-container">
+      <div class="event-index">
+    <div class="demo-card-event mdl-card mdl-shadow--2dp">
+      <div class="mdl-card__title mdl-card--expand">
+
+          <h4><span class="title">{{ event.title }}</span></br>
+            <br>
+            <br>
+            {{ event.begin_at.strftime('%I:%M %p') }}
+          </h4>
+          <p class="date">&nbsp;{{ event.begin_at.strftime('%B') }}<br>
+            &nbsp; &nbsp; {{ event.begin_at.strftime('%d, %Y') }}<br></p>
+
+      </div>
+      <div class="mdl-card__actions mdl-card--border">
+        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="/event/{{ event.host_id }}/{{ event.url }}">
+          invite friends
+        </a>
+        <div class="mdl-layout-spacer"></div>
+        <i class="material-icons">event</i>
+      </div>
+    </div>
+  </br>
+    </div>
   </div>
+</div>
+{% endfor %}
+
+
+
 
 </div>
 

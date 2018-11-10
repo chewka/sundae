@@ -5,10 +5,10 @@
 {% endblock %}
 
 {% block styles %}
+
 {% endblock %}
 
 {% block content %}
-<div class="container">
   <div class="centered-container">
   <div class="event-display">
     <h1> {{ title }} </h1>
@@ -18,12 +18,14 @@
     <h5> ends @ {{ end_at.strftime('%I:%M %p') }} <h5>
     <p>  {{ info }} <p>
     <form action="/invite/{{ host_id }}/{{ url }}" method="GET">
-    <button type="submit">invite friends</button>
+    <button type="submit">invite friends</button></form>
+    <button onclick="window.location='/create';">create your own event</button>
   </div>
 
   <!-- <input value={{max_cap}} hidden></input>
   <input type="submit" value={{ max_cap }} name="max_cap"></input> -->
 </form>
 </div>
-</div>
+
+
 {% endblock %}

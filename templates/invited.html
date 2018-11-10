@@ -15,22 +15,55 @@ Enter your email
 </div>
 
 {% block content %}
-<div class="container">
-  <h4>Emails Invited</h4>
-  <hr>
-    <table>
-      <tr>
-        <td>
-        </td>
-        <td>
-        </td>
-      <tr>
-        <td>
-          {% for email in invite_emails %}
-          <p> - {{ email }}</p>
-          {% endfor %}
-        </td>
-      </tr>
+<body class="mdl-demo mdl-color--grey-100 mdl-color-text--grey-700 mdl-base">
+  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <header class="mdl-layout__header mdl-layout__header--scroll mdl-color--primary">
+      <div class="mdl-layout--large-screen-only mdl-layout__header-row">
+      </div>
+      <div class="mdl-layout--large-screen-only mdl-layout__header-row">
+        <h3>🍨 sundae socials</h3>
+      </div>
+      <div class="mdl-layout--large-screen-only mdl-layout__header-row">
+      </div>
+      <div class="mdl-layout__tab-bar mdl-js-ripple-effect mdl-color--primary-dark">
+        <a href="/" class="mdl-layout__tab">🏠 home</a>
+        <a href="/create" class="mdl-layout__tab is-active">✍️ create</a>
+        <a href="/socials" class="mdl-layout__tab">👥 socials</a>
+        <a href="/venues" class="mdl-layout__tab">🌐 venues</a>
+        <a href="/me" class="mdl-layout__tab">👤 me</a>
+        {% if 'user_id' in session %}
+        <a href="/exit" class="mdl-layout__tab">👋 exit</a>
+        {% else %}
+        <a href="/join" class="mdl-layout__tab">🕶️ VIP</a>
+        {% endif %}
+        <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-shadow--4dp mdl-color--accent" id="add" onclick="window.location='/create';">
+          <i class="material-icons" role="presentation">add</i>
+          <span class="visuallyhidden">Add</span>
+        </button>
+      </div>
+    </header>
+    <main class="mdl-layout__content">
+      <div class="mdl-layout__tab-panel is-active" id="overview">
+    </header>
 
-</div> <!-- /container -->
-{% endblock %}
+<div class="container">
+    <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+               <div class="mdl-card mdl-cell mdl-cell--12-col">
+                 <div class="mdl-card__supporting-text">
+                   <h4>Accounts Invited</h4>
+                   Users can log in and view event details under "SOCIALS"
+                   <hr>
+                         {% for email in invite_emails %}
+                         <p> &#9758; {{ email }}</p>
+                         {% endfor %}
+                   </div>
+               </div>
+               <div class="mdl-card__actions">
+                  <a href="mailto:{% for email in invite_emails %}{{ email }}{% endfor %},sundaesocials@gmail.com?&subject=You%20are%20invited&body=localhost:5000/event/{{ event.host_id }}/{{ event.url }}" class="mdl-button" class="mdl-button">Send an email to your friends</a>
+                </div>
+               <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="btn3">
+                 <a href="mailto:{% for email in invite_emails %}{{ email }}{% endfor %},sundaesocials@gmail.com?&subject=You%20are%20invited&body=localhost:5000/event/{{ event.host_id }}/{{ event.url }}" class="mdl-button">Email Us</a>
+               </button>
+             </section>
+          {% endblock %}
+<div>

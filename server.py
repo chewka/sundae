@@ -230,7 +230,10 @@ def invite_post(user_id, event_url):
         db.session.add(invited)
         db.session.commit()
 
-    return render_template('invited.html', invite_emails=invite_emails)
+        event = Event.query.filter_by(id=invited.event_id).first()
+        # last_email = Event.query.filter_by(id=invited.event_id).order_by("Invited."id.desc()).first()
+
+    return render_template('invited.html', invite_emails=invite_emails, event=event)
 
 
 @app.route('/join', methods=['GET', 'POST'])

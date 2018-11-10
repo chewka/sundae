@@ -5,33 +5,88 @@ Sundae Socials
 {% endblock %}
 
 {% block styles %}
-<link rel="stylesheet" href="static/styles.css">
+<style>
+.demo-card-wide.mdl-card {
+  width: 512px;
+}
+.demo-card-wide > .mdl-card__title {
+  color: #fff;
+  height: 176px;
+  background: url('https://d9hyo6bif16lx.cloudfront.net/live/img/production/detail/menu/ice-cream_sundaes_friendlys-crowd-pleaser.jpg') center / cover;
+}
+.demo-card-wide > .mdl-card__menu {
+  color: #fff;
+}
+
+.mdl-card__menu {
+  margin: 20px;
+}
+</style>
 {% endblock %}
 
 {% block content %}
-<div class="container">
-  <div id="location">
-    <p> </p>
-    <h2>LOCATION: {{ postal_code }}</h2>
-    <p> </p>
+
+<body class="mdl-demo mdl-color--grey-100 mdl-color-text--grey-700 mdl-base">
+  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <header class="mdl-layout__header mdl-layout__header--scroll mdl-color--primary">
+      <div class="mdl-layout--large-screen-only mdl-layout__header-row">
+      </div>
+      <div class="mdl-layout--large-screen-only mdl-layout__header-row">
+        <h3>🍨 sundae socials</h3>
+      </div>
+      <div class="mdl-layout--large-screen-only mdl-layout__header-row">
+      </div>
+      <div class="mdl-layout__tab-bar mdl-js-ripple-effect mdl-color--primary-dark">
+        <a href="/" class="mdl-layout__tab">🏠 home</a>
+        <a href="/create" class="mdl-layout__tab">✍️ create</a>
+        <a href="/socials" class="mdl-layout__tab">👥 socials</a>
+        <a href="/venues" class="mdl-layout__tab is-active">🌐 venues</a>
+        <a href="/me" class="mdl-layout__tab">👤 me</a>
+        {% if 'user_id' in session %}
+        <a href="/exit" class="mdl-layout__tab">👋 exit</a>
+        {% else %}
+        <a href="/join" class="mdl-layout__tab">🕶️ VIP</a>
+        {% endif %}
+        <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-shadow--4dp mdl-color--accent" id="add" onclick="window.location='/create';">
+          <i class="material-icons" role="presentation">add</i>
+          <span class="visuallyhidden">Add</span>
+        </button>
+      </div>
+    </header>
+    <main class="mdl-layout__content">
+      <div class="mdl-layout__tab-panel is-active" id="overview">
+    </header>
+
+
+<section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+    <div class="mdl-card mdl-cell mdl-cell--12-col">
+    <div class="mdl-card__title">
+      <h2 class="mdl-card__title-text">Check out the scene</h2>
+    </div>
+    <div class="mdl-card__supporting-text">
+      In order to create an event, please register your venue or select one from the following options when you <a href="/create">create</a> your event.
+    </div>
+
+    <div class="mdl-card__actions mdl-card--border">
+      <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="/register">
+        Register your venue
+      </a>
+    </div>
   </div>
 
-  <div class="venues">
-    <h2>TODAY'S EVENTS: </h2>
-    {% for item in events_today %}
-    <h5><a href="/event/{{ item.host_id }}/{{ item.url }}">{{ item.title }}</a></h5>
-    <strong>{{ item.begin_at.strftime('%A | %B %d, %Y') }}</strong>
+  <div class="mdl-card__menu">
+  </div>
+  {% for venue in venues %}
+            <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+              <div class="mdl-card mdl-cell mdl-cell--12-col">
+                <div class="mdl-card__supporting-text">
+                  <h4>{{ venue.name }}</h4><br>
+                  {{ venue.addr_1 }}<br>
+                  {{ venue.city }}, {{ venue.state }} {{ venue.postal_code }}
+                </div>
+              </div>
+            </section>
     {% endfor %}
-  </div>
-
-  <div class="events">
-    <h2>UPCOMING EVENTS:</h2>
-    {% for event in events_upcoming %}
-    <h5><a href="/event/{{ event.host_id }}/{{ event.url }}">{{ event.title }}</a></h5>
-    <strong>{{ event.begin_at.strftime('%A | %B %d, %Y') }}</strong>
-    {% endfor %}
-  </div>
-
 </div>
 
 {% endblock %}
