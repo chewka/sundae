@@ -5,21 +5,35 @@
 {% endblock %}
 
 {% block styles %}
+<style>
+  .lg-font {
+    font-size: 22pt;
+    font-family: 'Libre Baskerville', serif;
+  }
 
+  .md-font {
+    font-size: 16pt;
+  }
+</style>
 {% endblock %}
 
 {% block content %}
   <div class="centered-container">
-  <div class="event-display">
-    <h1> {{ title }} </h1>
-    <h2> @ {{ venue.name }} </h1>
-    <h5> {{ begin_at.strftime('%A - %B %d, %Y') }} <h5>
-    <h5> starts @ {{ begin_at.strftime('%I:%M %p') }} <h5>
-    <h5> ends @ {{ end_at.strftime('%I:%M %p') }} <h5>
-    <p>  {{ info }} <p>
+    <div class="event-display">
+      <h1> {{ title }} </h1>
+      <h2> @ {{ venue.name }} </h1>
+    </div>
+  </div>
+  <div class="centered-container-2">
+    <div class="event-display-2">
+    <p class="lg-font"> {{ begin_at.strftime('%A') }} </p>
+    <p class="lg-font"> {{ begin_at.strftime('%B %d, %Y') }} </p>
+    <p class="md-font"><strong> {{ begin_at.strftime('%I:%M %p') }} - {{ end_at.strftime('%I:%M %p') }} </strong></p>
+    <p class="md-font">{{ info }}</p>
     <form action="/invite/{{ host_id }}/{{ url }}" method="GET">
     <button type="submit">invite friends</button></form>
     <button onclick="window.location='/create';">create your own event</button>
+  </div>
   </div>
 
   <!-- <input value={{max_cap}} hidden></input>

@@ -9,24 +9,66 @@ VIP only: join the club.
 {% endblock %}
 
 {% block content %}
+<body class="mdl-demo mdl-color--grey-100 mdl-color-text--grey-700 mdl-base">
+  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <header class="mdl-layout__header mdl-layout__header--scroll mdl-color--primary">
+      <div class="mdl-layout--large-screen-only mdl-layout__header-row">
+      </div>
+      <div class="mdl-layout--large-screen-only mdl-layout__header-row">
+        <h3>🍨 sundae socials</h3>
+      </div>
+      <div class="mdl-layout--large-screen-only mdl-layout__header-row">
+      </div>
+      <div class="mdl-layout__tab-bar mdl-js-ripple-effect mdl-color--primary-dark">
+        <a href="/" class="mdl-layout__tab is-active">🏠 home</a>
+        <a href="/create" class="mdl-layout__tab">✍️ create</a>
+        <a href="/socials" class="mdl-layout__tab">👥 socials</a>
+        <a href="/venues" class="mdl-layout__tab">🌐 venues</a>
+        <a href="/me" class="mdl-layout__tab">👤 me</a>
+        {% if 'user_id' in session %}
+        <a href="/exit" class="mdl-layout__tab">👋 exit</a>
+        {% else %}
+        <a href="/join" class="mdl-layout__tab">🕶️ VIP</a>
+        {% endif %}
+        <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-shadow--4dp mdl-color--accent" id="add" onclick="window.location='/create';">
+          <i class="material-icons" role="presentation">add</i>
+          <span class="visuallyhidden">Add</span>
+        </button>
+      </div>
+    </header>
+    <main class="mdl-layout__content">
+      <div class="mdl-layout__tab-panel is-active" id="overview">
+    </header>
+
+
 <div class="container">
+  <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+  <div class="mdl-card mdl-cell mdl-cell--12-col">
+  <div class="mdl-card__supporting-text">
   <h4>VIP Only: Are you on the list?</h4>
-  <h6>&#9758; enter your info to login</h6>
+  <h6>&#9758; you've been here before!</h6>
+  <h6>enter your info to login</h6>
   <hr>
   <form class="form-login" action="/VIP-only" method="POST">
     <table>
       <tr>
-        <td>e-mail</td>
         <td>
-          <input type="email" name="email" value="{{ email }}" required>
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" type="email" name="email" id="email" value="{{ email }}">
+            <label class="mdl-textfield__label" for="email">email</label>
+          </div>
         </td>
       </tr>
+
       <tr>
-        <td>password</td>
         <td>
-          <input type="password" name="password" required>
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" type="password" name="password" id="password">
+            <label class="mdl-textfield__label" for="password">password</label>
+          </div>
         </td>
       </tr>
+
       <tr>
         <td>
           <button type="submit">Sign In</button>
@@ -34,5 +76,7 @@ VIP only: join the club.
       </tr>
     </table>
   </form>
+</div>
+</div>
 </div>
 {% endblock %}

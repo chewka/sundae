@@ -47,24 +47,22 @@ Enter your email
               <div class="mdl-card mdl-cell mdl-cell--12-col">
                 <div class="mdl-card__supporting-text">
                   <h4>Let's get started!</h4>
-                  We only need your email to sign-in
+                  enter your e-mail address to create an account
                   <form class="form-login" action="/email" method="POST">
                       <div class="mdl-textfield mdl-js-textfield">
                         {% if "user_id" in session %}
-                          <input class="mdl-textfield__input" type="text" name="email" id="email" value="{{ email }}" required>
-                          <label class="mdl-textfield__label" for="email">Email</label>
-                          <span class="mdl-textfield__error">Email</span>
+                          <input class="mdl-textfield__input" type="text" name="email" id="email" value="{{ email }}">
+                          <label class="mdl-textfield__label" for="email">e-mail</label>
                         {% else %}
-                          <input class="mdl-textfield__input" type="text" id="email" name="email" required>
-                          <label class="mdl-textfield__label" for="email">Email</label>
-                          <span class="mdl-textfield__error">Email</span>
+                          <input class="mdl-textfield__input" type="text" id="email" name="email">
+                          <label class="mdl-textfield__label" for="email">e-mail</label>
                         {% endif %}
                       </div>
                       </td>
                     </tr>
                   </table>
                   <hr>
-                <button type="submit">Let's go!</button>
+                  <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type="submit">let's go</button>
                 </form>
                 </div>
             </section>

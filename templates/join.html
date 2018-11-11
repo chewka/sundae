@@ -46,68 +46,92 @@ Create an account to host events!
   {% for flash in get_flashed_messages() %}
     {{ flash }}
   {% endfor %}
-  <hr>
+
+  <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--1dp">
+  <div class="mdl-card mdl-cell mdl-cell--6-col">
+  <div class="mdl-card__supporting-text">
+
+    <div class="mdl-grid">
+    <div class="mdl-cell mdl-cell--4-col">
   </div>
   <h4>Update your account</h4>
   <h6>&#9758; add a little more info | <a href="/">skip</a> </h6>
   <hr>
   <form class="form-login" action="/join" method="POST">
     <table>
-      <tr>
-        <td>username</td>
-        <td>
-          <input type="textbox" name="username" required>
-        </td>
-      </tr>
-      <tr>
-        <td>password</td>
-        <td>
-          <input type="password" name="password" required>
-        </td>
-      </tr>
-      <tr>
-        <td><hr></td>
-        <td><hr></td>
-      </tr>
-      <tr>
-        <td>first name</td>
-        <td>
-          <input type="textbox" name="fname" value="{{ fname }}" required>
-        </td>
-      </tr>
-      <tr>
-        <td>last name</td>
-        <td>
-          <input type="textbox" name="lname" value="{{ lname }}" required>
-        </td>
-      </tr>
-      <tr>
-        <td><hr></td>
-        <td><hr></td>
-      </tr>
-	    <tr>
-		    <td>postal code</td>
-		    <td>
-          <input type="textbox" name="postal_code" value="{{ postal_code }}" required>
-        </td>
-	    </tr>
-      <tr>
-        <td>phone number</td>
-        <td>
-          <input type="textbox" name="phone" value="{{ phone }}">
-        </td>
-      </tr>
-      <tr>
-        <td><hr></td>
-        <td><hr></td>
-      </tr>
+
       <tr>
         <td>
-          <button type="submit">create an account</button>
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" type="text" name="username" id="username">
+            <label class="mdl-textfield__label" for="username">username</label>
+          </div>
         </td>
       </tr>
+
+
+      <tr>
+        <td>
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" type="password" name="password" id="password">
+            <label class="mdl-textfield__label" for="password">password</label>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" type="text" name="fname" id="fname" value="{{ fname }}">
+            <label class="mdl-textfield__label" for="fname">first name</label>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" type="text" name="lname" id="lname" value="{{ lname }}">
+            <label class="mdl-textfield__label" for="lname">last name</label>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" name="phone" id="phone" value="{{ phone }}">
+            <label class="mdl-textfield__label" for="phone">phone number</label>
+          </div>
+        </td>
+      <tr>
+
+      <tr>
+        <td>
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" name="postal_code" id="postal_code" value="{{ postal_code }}">
+            <label class="mdl-textfield__label" for="postal_code">postal code</label>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          &nbsp;
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type="submit">get social</button>
+        </td>
+      </tr>
+
     </table>
   </form>
 
-</div> <!-- /container -->
+</div>
+
+</div>
+</div>
 {% endblock %}

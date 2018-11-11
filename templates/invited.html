@@ -61,9 +61,6 @@ Enter your email
                <div class="mdl-card__actions">
                   <a href="mailto:{% for email in invite_emails %}{{ email }}{% endfor %},sundaesocials@gmail.com?&subject=You%20are%20invited&body=localhost:5000/event/{{ event.host_id }}/{{ event.url }}" class="mdl-button" class="mdl-button">Send an email to your friends</a>
                 </div>
-               <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="btn3">
-                 <a href="mailto:{% for email in invite_emails %}{{ email }}{% endfor %},sundaesocials@gmail.com?&subject=You%20are%20invited&body=localhost:5000/event/{{ event.host_id }}/{{ event.url }}" class="mdl-button">Email Us</a>
-               </button>
              </section>
           {% endblock %}
 <div>

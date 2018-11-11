@@ -1,4 +1,5 @@
 """Sundae Socials: get together"""
+import os
 from jinja2 import StrictUndefined
 from functools import wraps
 from datetime import datetime, timedelta
@@ -8,7 +9,7 @@ from flask_sqlalchemy  import SQLAlchemy
 from model import User, Venue, Event, Category, connect_to_db, db, Invited
 
 app = Flask(__name__)
-app.secret_key = "ABC"
+app.secret_key = os.environ['APP_SECRET_KEY']
 
 from functools import wraps
 
@@ -351,6 +352,7 @@ def RSVP():
     return render_template('/event.html') #, event_url=url)
 
 @app.route('/venues', methods=['GET'])
+@login_required
 def venues():
     venues = Venue.query.filter_by(country='United States')
     return render_template('/venues.html', venues=venues)
@@ -378,4 +380,4 @@ def page_not_found(e):
 
 if __name__ == '__main__':
     connect_to_db(app)
-    app.run(debug=True, port=5000, host='0.0.0.0')
+    app.run(port=5000, host='0.0.0.0')

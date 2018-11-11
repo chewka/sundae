@@ -56,13 +56,49 @@ $(document).ready(function() {
 {% endblock %}
 
 {% block content %}
+
+<body class="mdl-demo mdl-color--grey-100 mdl-color-text--grey-700 mdl-base">
+  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <header class="mdl-layout__header mdl-layout__header--scroll mdl-color--primary">
+      <div class="mdl-layout--large-screen-only mdl-layout__header-row">
+      </div>
+      <div class="mdl-layout--large-screen-only mdl-layout__header-row">
+        <h3>🍨 sundae socials</h3>
+      </div>
+      <div class="mdl-layout--large-screen-only mdl-layout__header-row">
+      </div>
+      <div class="mdl-layout__tab-bar mdl-js-ripple-effect mdl-color--primary-dark">
+        <a href="/" class="mdl-layout__tab">🏠 home</a>
+        <a href="/create" class="mdl-layout__tab">✍️ create</a>
+        <a href="/socials" class="mdl-layout__tab">👥 socials</a>
+        <a href="/venues" class="mdl-layout__tab is-active">🌐 venues</a>
+        <a href="/me" class="mdl-layout__tab">👤 me</a>
+        {% if 'user_id' in session %}
+        <a href="/exit" class="mdl-layout__tab">👋 exit</a>
+        {% else %}
+        <a href="/join" class="mdl-layout__tab">🕶️ VIP</a>
+        {% endif %}
+        <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-shadow--4dp mdl-color--accent" id="add" onclick="window.location='/create';">
+          <i class="material-icons" role="presentation">add</i>
+          <span class="visuallyhidden">Add</span>
+        </button>
+      </div>
+    </header>
+    <main class="mdl-layout__content">
+      <div class="mdl-layout__tab-panel is-active" id="overview">
+    </header>
+
+
 <div class="container">
+
+<section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--1dp">
+  <div class="mdl-card mdl-cell mdl-cell--6-col">
+  <div class="mdl-card__supporting-text">
   <div id="message"></div>
   <h4>Register your venue</h4>
   <h6>&#9758; get on the map | <a href="/create">skip, create event</a></h6>
   <hr>
   <p></p>
-  <legend>VENUE</legend>
   <form class="create" action="/register" method="POST">
     <table>
       <tr>
@@ -228,6 +264,8 @@ $(document).ready(function() {
       </tr>
     </table>
   </form>
+</div>
+</div>
 </div>
 
  <!-- <h4> SEARCH </h4>

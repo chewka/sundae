@@ -9,7 +9,7 @@ Sundae Socials
   .demo-card-event.mdl-card {
     width: 256px;
     height: 256px;
-    background: #3E4EB8;
+    background: #683bb7;
   }
   .demo-card-event > .mdl-card__actions {
     border-color: rgba(255, 255, 255, 0.2);
@@ -50,7 +50,6 @@ Sundae Socials
     text-align: right;
   }
 
-
   </style>
 {% endblock %}
 
@@ -87,7 +86,15 @@ Sundae Socials
     </header>
 
 
+
+
+
+
+
+  <div class="mdl-grid">
+
   {% for event in events_upcoming %}
+  <div class="mdl-cell mdl-cell--4-col">
   <div class="grid-container">
     <div class="centered-container">
       <div class="event-index">
@@ -115,8 +122,9 @@ Sundae Socials
     </div>
   </div>
 </div>
+</div>
 {% endfor %}
-
+</div>
 
 
 

@@ -29,10 +29,23 @@ body {
 .event-display {
   width: 300px;
   height: 300px;
-  outline-style: solid;
-  outline-offset: 40px;
-  outline-width: 20px;
   margin-top: 50px;
+  border: 10px solid white;
+}
+
+.centered-container-2 {
+  height: 50%;
+  display: flex;
+  border: 30px;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.event-display-2 {
+  width: 300px;
+  height: 300px;
+  display: inline-block;
   border: 10px solid white;
 }
 

@@ -6,6 +6,12 @@ Sundae Socials
 
 {% block styles %}
 <link rel="stylesheet" href="static/styles.css">
+
+<style>
+  .light-ft {
+    color: lightgrey;
+  }
+</style>
 {% endblock %}
 
 {% block content %}
@@ -48,10 +54,16 @@ Sundae Socials
       <h4 class="mdl-cell mdl-cell--12-col">hosting</h4>
       {% for host in hosting %}
       <div class="section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
-        <div class="section__circle-container__circle mdl-color--white"></div>
+        <div class="section__circle-container__circle mdl-color--white">
+          <span class="mdl-chip">
+          <span class="mdl-chip__text">{{ host.begin_at.strftime('%A') }}
+          </span>
+          </span>
+      </div>
       </div>
       <div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
-          <p><strong>{{ host.begin_at.strftime('%A | %B %d, %Y') }}</strong></p>
+
+          <p><strong>{{ host.begin_at.strftime('%B %d') }}</strong> | <span class="light-ft">{{ host.begin_at.strftime('%I:%M %p') }}</span></p>
           <h5><a href="/event/{{ user_id }}/{{ host.url }}">{{ host.title }}</a></h5>
           <p>{{ host.info }}</p>
       </div>
@@ -66,10 +78,18 @@ Sundae Socials
       <h4 class="mdl-cell mdl-cell--12-col">invited</h4>
       {% for invite in invited %}
       <div class="section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
-        <div class="section__circle-container__circle mdl-color--white"></div>
+        <div class="section__circle-container__circle mdl-color--white">
+          <span class="mdl-chip">
+          <span class="mdl-chip__text">{{ invite.event.begin_at.strftime('%A') }}
+          </span>
+          </span>
+        </div>
       </div>
       <div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
-          <p><strong>{{ invite.event.begin_at.strftime('%A | %B %d, %Y') }}</strong></p>
+          <p>
+            <strong>{{ invite.event.begin_at.strftime('%B %d') }} </strong> |
+            <span class="light-ft">{{ invite.event.begin_at.strftime('%I:%M %p') }}</span></p>
+          </p>
           <h5><a href="/event/{{ invite.event.host_id }}/{{ invite.event.url }}">{{ invite.event.title }} </a></h5>
           <p>{{ invite.event.info }}</p>
       </div>
