@@ -30,15 +30,19 @@
     <p class="lg-font"> {{ begin_at.strftime('%B %d, %Y') }} </p>
     <p class="md-font"><strong> {{ begin_at.strftime('%I:%M %p') }} - {{ end_at.strftime('%I:%M %p') }} </strong></p>
     <p class="md-font">{{ info }}</p>
+    <p></p>
     <form action="/invite/{{ host_id }}/{{ url }}" method="GET">
-    <button type="submit">invite friends</button></form>
-    <button onclick="window.location='/create';">create your own event</button>
+    <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type="submit">invite friends</button>
+    </form>
+    <p></p>
+    <button onclick="window.location='/create';" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">create your own event</button>
+
   </div>
   </div>
 
   <!-- <input value={{max_cap}} hidden></input>
   <input type="submit" value={{ max_cap }} name="max_cap"></input> -->
-</form>
+
 </div>
 
 
